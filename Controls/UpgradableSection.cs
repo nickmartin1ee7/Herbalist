@@ -72,7 +72,7 @@ public partial class UpgradableSection : Node2D
 
 	private void _on_button_pressed()
 	{
-		if (CanPurchaseMultiplier())
+		if (!CanPurchaseMultiplier())
 		{
 			GD.Print($"Cannot afford to purchase upgrade for {SeedType}. {_world.Points} < {UpgradeCost}!");
 			return;
