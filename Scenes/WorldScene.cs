@@ -9,6 +9,8 @@ public partial class WorldScene : Node2D
 
 	private VBoxContainer _vbox;
 	private Button _buyButton;
+	private Panel _costPanel;
+	private Label _costLabel;
 	private Label _pointsLabel;
 	private Dictionary<Seed, UpgradableSection> _sections = new();
 	private int _lastSeedIndex;
@@ -42,6 +44,10 @@ public partial class WorldScene : Node2D
 			.GetNode<VBoxContainer>("VBoxContainer");
 
 		_buyButton = GetNode<Button>("BuyButton");
+		_costPanel = GetNode<Panel>("CostPanel");
+		_costLabel = GetNode<Panel>("CostPanel")
+			.GetNode<Label>("CostLabel");
+
 
 		_pointsLabel = GetNode<OverviewSection>("OverviewSection")
 			.GetNode<Label>("Label");
@@ -58,7 +64,8 @@ public partial class WorldScene : Node2D
 			return;
 		}
 
-		_buyButton.Text = $"Buy a {seed}";
+		_buyButton.Text = $"Buy {seed} ({(int)seed}/second)";
+		_costLabel.Text = $"Costs {(int)seed * 100} seeds)";
 	}
 
 	private async Task PointRenderCyclerJob()
@@ -124,9 +131,15 @@ public partial class WorldScene : Node2D
 				// No more to buy!
 				GD.Print($"No more upgrades to buy!");
 
-				_buyButton.Visible = false;
+				HidePurchasing();
 			}
 		}
+	}
+
+	private void HidePurchasing()
+	{
+		_buyButton.Text = "Sold Out";
+		_costPanel.Visible = false;
 	}
 
 	private UpgradableSection PrepareNextSection(UpgradableSection section)

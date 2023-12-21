@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://ci4b5mgekpaev"]
+[gd_scene load_steps=5 format=3 uid="uid://ci4b5mgekpaev"]
 
 [ext_resource type="Script" path="res://Scenes/WorldScene.cs" id="1_7ydjs"]
 [ext_resource type="Texture2D" uid="uid://dwjvfyf1rir43" path="res://Assets/world_scene_background_tall.jpg" id="2_0ubxp"]
 [ext_resource type="PackedScene" uid="uid://dikrov6ek60gx" path="res://Controls/overview_section.tscn" id="4_o57fr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4wxbr"]
 
 [node name="WorldScene" type="Node2D"]
 script = ExtResource("1_7ydjs")
@@ -19,16 +21,32 @@ metadata/_edit_lock_ = true
 [node name="BuyButton" type="Button" parent="."]
 offset_left = 120.0
 offset_top = 360.0
-offset_right = 949.0
+offset_right = 968.0
 offset_bottom = 456.0
-theme_override_font_sizes/font_size = 64
+theme_override_font_sizes/font_size = 46
 text = "Buy Next"
 
+[node name="CostPanel" type="Panel" parent="."]
+offset_left = 192.0
+offset_top = 456.0
+offset_right = 896.0
+offset_bottom = 520.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_4wxbr")
+
+[node name="CostLabel" type="Label" parent="CostPanel"]
+offset_right = 704.0
+offset_bottom = 67.0
+theme_override_font_sizes/font_size = 42
+text = "Costs 0 seeds"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
-offset_left = 136.0
-offset_top = 496.0
-offset_right = 952.0
-offset_bottom = 2144.0
+offset_left = 120.0
+offset_top = 523.0
+offset_right = 936.0
+offset_bottom = 2128.0
+metadata/_edit_lock_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
 layout_mode = 2
