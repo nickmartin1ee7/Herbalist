@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 public partial class WorldScene : Node2D
 {
+	private const float SectionHeight = 120; // Height of each Section
+	private const float SectionSpacing = 120; // Vertical spacing between Sections
 	private const int DataSaverCyclerDelayMs = 5000;
 	private const int PointRenderCyclerDelayMs = 5;
 	private const long StartingPoints = 300;
@@ -82,8 +84,38 @@ public partial class WorldScene : Node2D
 			var seeds = JsonSerializer.Deserialize<Seed[]>(sectionsStr);
 			foreach (var seed in seeds)
 			{
-				// TODO
-				GD.Print($"TODO: Give the user back previously purchased: {seed}");
+				GD.Print($"Giving the user back previously purchased: {seed}");
+
+				// TODO: Refactor duplication
+				// Load the Section scene and instance it
+				var upgradableSectionScene = GD.Load<PackedScene>(UpgradableSection.ResourcePath);
+				var section = upgradableSectionScene.Instantiate<UpgradableSection>();
+
+				// Set the Section's position based on its index
+				var newPos = new Vector2(section.Position.X, _vbox.GetChildCount() * (SectionHeight + SectionSpacing));
+				section.Position = newPos;
+
+				section.Scale = new Vector2(2.5f, 2.5f);
+
+				var preparedSection = PrepareNextSection(section);
+
+				if (preparedSection is not null)
+				{
+					_vbox.AddChild(preparedSection);
+
+					var nextUpgrade = PeekNextSeed(out _);
+					UpdateBuyButton(nextUpgrade);
+
+					GD.Print($"Next upgrade: {nextUpgrade}");
+
+					if (nextUpgrade is null)
+					{
+						// No more to buy!
+						GD.Print($"No more upgrades to buy!");
+
+						HidePurchasing();
+					}
+				}
 			}
 		}
 
@@ -180,9 +212,6 @@ public partial class WorldScene : Node2D
 
 	private void HandleNewUpgrade()
 	{
-		const float sectionHeight = 120; // Height of each Section
-		const float spacing = 120; // Vertical spacing between Sections
-
 		var nextSeed = PeekNextSeed(out _);
 
 		if (!CanPurchaseNextUpgrade(nextSeed))
@@ -197,7 +226,7 @@ public partial class WorldScene : Node2D
 		var section = upgradableSectionScene.Instantiate<UpgradableSection>();
 
 		// Set the Section's position based on its index
-		var newPos = new Vector2(section.Position.X, _vbox.GetChildCount() * (sectionHeight + spacing));
+		var newPos = new Vector2(section.Position.X, _vbox.GetChildCount() * (SectionHeight + SectionSpacing));
 		section.Position = newPos;
 
 		section.Scale = new Vector2(2.5f, 2.5f);
@@ -239,9 +268,9 @@ public partial class WorldScene : Node2D
 		_costPanel.Visible = false;
 	}
 
-	private UpgradableSection PrepareNextSection(UpgradableSection section)
+	private UpgradableSection PrepareNextSection(UpgradableSection section, Seed? nextSeed = null)
 	{
-		var nextSeed = RequestNextSeed();
+		nextSeed = nextSeed ?? RequestNextSeed();
 
 		if (!nextSeed.HasValue)
 		{

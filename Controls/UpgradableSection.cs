@@ -9,6 +9,7 @@ public partial class UpgradableSection : Node2D
 	private Label _label;
 	private WorldScene _world;
 	private Seed _seed;
+	private object _progressJob;
 
 	public Seed SeedType
 	{
@@ -44,18 +45,40 @@ public partial class UpgradableSection : Node2D
 
 		_world = GetParent().GetParent().GetParent().GetParent().GetNode<WorldScene>("WorldScene");
 
+		_progressJob ??= Task.Run(ProgressCycle);
+
 		NotifyStateChanged();
 	}
+
+	private async Task ProgressCycle()
+	{
+		GD.Print($"Progress bar min value: {_progressBar.MinValue}, Max Value: {_progressBar.MaxValue}");
+
+		while (true)
+		{
+			var progress = _progressBar.Value;
+			// Ensure the progress value is within the valid range
+			var newProgress = Mathf.Clamp(progress + Multiplier,
+				_progressBar.MinValue,
+				_progressBar.MaxValue);
+
+			GD.Print($"Seed Type: {SeedType}, Previous Progress: {progress}, New Progress: {newProgress}, Multiplier: {Multiplier}");
+
+			CallThreadSafe(nameof(SetProgressBarValue), newProgress);
+
+			// 100ms = 10 iterations in 1 second
+			// 10ms = 100 iterations in 1 second
+			// 1ms = 1000 iterations in 1 second
+			await Task.Delay(10);
+		}
+	}
+
+	private void SetProgressBarValue(double value) =>
+		_progressBar.Value = value;
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		// Ensure the progress value is within the valid range
-		var newProgress = Mathf.Clamp(_progressBar.Value + delta * Rate, _progressBar.MinValue, _progressBar.MaxValue);
-
-		// Update the progress value
-		_progressBar.Value = newProgress;
-
 		if (_progressBar.Value == 100d)
 		{
 			_progressBar.Value = 0d;
