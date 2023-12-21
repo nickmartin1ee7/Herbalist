@@ -69,7 +69,7 @@ public partial class UpgradableSection : Node2D
 			// 100ms = 10 iterations in 1 second
 			// 10ms = 100 iterations in 1 second
 			// 1ms = 1000 iterations in 1 second
-			await Task.Delay(10);
+			await Task.Delay(5);
 		}
 	}
 

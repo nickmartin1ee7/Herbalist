@@ -13,8 +13,8 @@ config_version=5
 config/name="Herbalist"
 run/main_scene="res://Scenes/main_menu_scene.tscn"
 config/features=PackedStringArray("4.2", "C#", "Mobile")
-boot_splash/show_image=false
-config/icon="res://icon.svg"
+boot_splash/image="res://Assets/icon.jpg"
+config/icon="res://Assets/icon.jpg"
 
 [display]
 
