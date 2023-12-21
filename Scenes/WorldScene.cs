@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public partial class WorldScene : Node2D
 {
 	private VBoxContainer _vbox;
+	private Button _buyButton;
 	private Dictionary<Seed, UpgradableSection> _sections = new();
 	private int _lastSeedIndex;
 	private readonly Seed[] _seeds = Enum.GetValues<Seed>();
@@ -27,6 +28,8 @@ public partial class WorldScene : Node2D
 	{
 		_vbox = GetNode<ScrollContainer>("ScrollContainer")
 			.GetNode<VBoxContainer>("VBoxContainer");
+
+		_buyButton = GetNode<Button>("BuyButton");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -37,7 +40,6 @@ public partial class WorldScene : Node2D
 	private void _on_buy_button_pressed()
 	{
 		AddNewUpgradableSection();
-		GD.Print($"Added upgradable section to {_vbox}. Child nodes: {_vbox?.GetChildCount()}");
 	}
 
 	private void AddNewUpgradableSection()
@@ -61,6 +63,11 @@ public partial class WorldScene : Node2D
 		{
 			_vbox.AddChild(preparedSection);
 		}
+		else
+		{
+			// No more to buy!
+			_buyButton.Visible = false;
+		}
 	}
 
 	private UpgradableSection? PrepareNextSection(UpgradableSection section)
@@ -69,7 +76,6 @@ public partial class WorldScene : Node2D
 
 		if (!nextSeed.HasValue)
 		{
-
 			return null;
 		}
 
