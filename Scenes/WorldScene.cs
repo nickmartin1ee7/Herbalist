@@ -1,10 +1,13 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 public partial class WorldScene : Node2D
 {
+	private const int DataSaverCyclerDelayMs = 5000;
 	private const int PointRenderCyclerDelayMs = 5;
 	private const long StartingPoints = 300;
 
@@ -17,6 +20,7 @@ public partial class WorldScene : Node2D
 	private int _lastSeedIndex;
 	private readonly Seed[] _seeds = Enum.GetValues<Seed>();
 	private Task _pointRenderCycler;
+	private Task _dataSaverCycler;
 
 	private int GetSeedCost(Seed seed) => (int)seed * SeedCosts.Multiplier;
 
@@ -57,6 +61,7 @@ public partial class WorldScene : Node2D
 			.GetNode<Label>("Label");
 
 		_pointRenderCycler ??= Task.Run(PointRenderCyclerJob);
+		_dataSaverCycler ??= Task.Run(DataSaverCyclerJob);
 
 		await ReloadDataFromStorage();
 
@@ -65,9 +70,34 @@ public partial class WorldScene : Node2D
 
 	private async Task ReloadDataFromStorage()
 	{
-		//  _sections;
-		// _lastSeedIndex;
-		// Points
+		var data = await DataStorage.Read();
+
+		if (data is null)
+		{
+			return;
+		}
+
+		if (data.TryGetValue(nameof(_sections), out var sectionsStr))
+		{
+			var seeds = JsonSerializer.Deserialize<Seed[]>(sectionsStr);
+			foreach (var seed in seeds)
+			{
+				// TODO
+				GD.Print($"TODO: Give the user back previously purchased: {seed}");
+			}
+		}
+
+		if (data.TryGetValue(nameof(_lastSeedIndex), out var lastSeedIndexStr))
+		{
+			_lastSeedIndex = JsonSerializer.Deserialize<int>(lastSeedIndexStr);
+		}
+
+		if (data.TryGetValue(nameof(Points), out var pointsStr))
+		{
+			Points = JsonSerializer.Deserialize<long>(pointsStr);
+		}
+
+		GD.Print("Data read!");
 	}
 
 	private void UpdateBuyButton(Seed? seed)
@@ -94,6 +124,43 @@ public partial class WorldScene : Node2D
 
 			await Task.Delay(PointRenderCyclerDelayMs);
 		}
+	}
+
+	private async Task DataSaverCyclerJob()
+	{
+		GD.Print($"{nameof(DataSaverCyclerJob)} started!");
+
+		while (true)
+		{
+			try
+			{
+				await TrySaveData();
+				GD.Print($"{nameof(DataSaverCyclerJob)} data saved!");
+
+			}
+			catch (Exception ex)
+			{
+				GD.PrintErr($"{nameof(DataSaverCyclerJob)} failed to save data: {ex}", ex);
+			}
+
+			await Task.Delay(DataSaverCyclerDelayMs);
+		}
+	}
+
+	private async Task TrySaveData()
+	{
+		var sectionsStr = JsonSerializer.Serialize(_sections.Select(s => s.Key).ToArray());
+		var lastSeedIndexStr = JsonSerializer.Serialize(_lastSeedIndex);
+		var pointsStr = JsonSerializer.Serialize(Points);
+
+		var data = new Dictionary<string, string>
+		{
+			{ nameof(_sections), sectionsStr },
+			{ nameof(_lastSeedIndex), lastSeedIndexStr },
+			{ nameof(Points), pointsStr }
+		};
+
+		await DataStorage.Write(data);
 	}
 
 	private void UpdatePointsLabel()
