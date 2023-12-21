@@ -1,9 +1,26 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class WorldScene : Node2D
 {
 	private VBoxContainer _vbox;
+	private Dictionary<Seed, UpgradableSection> _sections = new();
+	private int _lastSeedIndex;
+	private readonly Seed[] _seeds = Enum.GetValues<Seed>();
+
+	private Seed? RequestNextSeed()
+	{
+		var nextSeedIndex = _lastSeedIndex + 1;
+
+		if (nextSeedIndex >= _seeds.Length)
+			return null;
+
+		var nextSeed = _seeds[nextSeedIndex];
+		_lastSeedIndex = nextSeedIndex;
+
+		return nextSeed;
+	}
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -38,6 +55,28 @@ public partial class WorldScene : Node2D
 
 		section.Scale = new Vector2(2.5f, 2.5f);
 
-		_vbox.AddChild(section);
+		var preparedSection = PrepareNextSection(section);
+
+		if (preparedSection is not null)
+		{
+			_vbox.AddChild(preparedSection);
+		}
 	}
+
+	private UpgradableSection? PrepareNextSection(UpgradableSection section)
+	{
+		var nextSeed = RequestNextSeed();
+
+		if (!nextSeed.HasValue)
+		{
+
+			return null;
+		}
+
+		section.SeedType = nextSeed.Value;
+		_sections.Add(nextSeed.Value, section);
+
+		return section;
+	}
+
 }
