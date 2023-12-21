@@ -119,6 +119,18 @@ public partial class WorldScene : Node2D
 			}
 		}
 
+		if (data.TryGetValue($"{nameof(_sections)}.{nameof(UpgradableSection.Multiplier)}", out var sectionsMultiplierStr))
+		{
+			var sectionsMultipliers = JsonSerializer.Deserialize<int[]>(sectionsMultiplierStr);
+			var sections = _sections.ToArray();
+
+			for (int i = 0; i < _sections.Count; i++)
+			{
+				GD.Print($"Upgrading {sections[i]} to {sectionsMultipliers[i]} multiplier");
+				sections[i].Value.Multiplier = sectionsMultipliers[i];
+			}
+		}
+
 		if (data.TryGetValue(nameof(_lastSeedIndex), out var lastSeedIndexStr))
 		{
 			_lastSeedIndex = JsonSerializer.Deserialize<int>(lastSeedIndexStr);
@@ -182,6 +194,8 @@ public partial class WorldScene : Node2D
 	private async Task TrySaveData()
 	{
 		var sectionsStr = JsonSerializer.Serialize(_sections.Select(s => s.Key).ToArray());
+		var sectionsUpgrades = JsonSerializer.Serialize(_sections.Select(s => s.Value.Multiplier).ToArray());
+
 		var lastSeedIndexStr = JsonSerializer.Serialize(_lastSeedIndex);
 		var pointsStr = JsonSerializer.Serialize(Points);
 
@@ -189,7 +203,8 @@ public partial class WorldScene : Node2D
 		{
 			{ nameof(_sections), sectionsStr },
 			{ nameof(_lastSeedIndex), lastSeedIndexStr },
-			{ nameof(Points), pointsStr }
+			{ nameof(Points), pointsStr },
+			{ $"{nameof(_sections)}.{nameof(UpgradableSection.Multiplier)}", sectionsUpgrades}
 		};
 
 		await DataStorage.Write(data);

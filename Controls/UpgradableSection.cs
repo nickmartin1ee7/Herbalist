@@ -9,7 +9,8 @@ public partial class UpgradableSection : Node2D
 	private Label _label;
 	private WorldScene _world;
 	private Seed _seed;
-	private object _progressJob;
+	private int _multiplier = 1;
+	private Task _progressJob;
 
 	public Seed SeedType
 	{
@@ -26,7 +27,20 @@ public partial class UpgradableSection : Node2D
 			NotifyStateChanged();
 		}
 	}
-	public int Multiplier { get; private set; } = 1;
+	public int Multiplier
+	{
+		get => _multiplier;
+		set
+		{
+			if (_multiplier == value)
+			{
+				return;
+			}
+
+			_multiplier = value;
+			NotifyStateChanged();
+		}
+	}
 	public int Rate => (int)SeedType * Multiplier;
 
 	public const string ResourcePath = "res://Controls/upgradable_section.tscn";
