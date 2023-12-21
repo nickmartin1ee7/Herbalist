@@ -32,7 +32,7 @@ public partial class UpgradableSection : Node2D
 
 	public EventHandler<long> PointCreated { get; set; }
 	public int UpgradeCost =>
-		(int)SeedType * (int)(SeedCosts.Multiplier / 2d) * Multiplier;
+		(int)SeedType * (int)(SeedCosts.Multiplier / 10d) * Multiplier;
 
 	// Called when the node enters the scene tree for the first time.
 

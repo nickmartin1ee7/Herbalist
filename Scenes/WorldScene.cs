@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 public partial class WorldScene : Node2D
 {
 	private const int PointRenderCyclerDelayMs = 5;
-	private const long StartingPoints = 200;
+	private const long StartingPoints = 300;
 
 	private VBoxContainer _vbox;
 	private Button _buyButton;
