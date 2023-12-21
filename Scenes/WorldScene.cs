@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 public partial class WorldScene : Node2D
 {
 	private const int PointRenderCyclerDelayMs = 5;
+	private const int SeedCostMultiplier = 100;
 
 	private VBoxContainer _vbox;
 	private Button _buyButton;
@@ -14,9 +15,11 @@ public partial class WorldScene : Node2D
 	private Label _pointsLabel;
 	private Dictionary<Seed, UpgradableSection> _sections = new();
 	private int _lastSeedIndex;
-	private long _points;
+	private long _points = 100;
 	private readonly Seed[] _seeds = Enum.GetValues<Seed>();
 	private Task _pointRenderCycler;
+
+	private int GetSeedCost(Seed seed) => (int)seed * SeedCostMultiplier;
 
 	private Seed? RequestNextSeed()
 	{
@@ -65,7 +68,7 @@ public partial class WorldScene : Node2D
 		}
 
 		_buyButton.Text = $"Buy {seed} ({(int)seed}/second)";
-		_costLabel.Text = $"Costs {(int)seed * 100} seeds)";
+		_costLabel.Text = $"Costs {(int)seed * SeedCostMultiplier} seeds)";
 	}
 
 	private async Task PointRenderCyclerJob()
@@ -95,13 +98,22 @@ public partial class WorldScene : Node2D
 
 	private void _on_buy_button_pressed()
 	{
-		AddNewUpgradableSection();
+		HandleNewUpgrade();
 	}
 
-	private void AddNewUpgradableSection()
+	private void HandleNewUpgrade()
 	{
 		const float sectionHeight = 120; // Height of each Section
 		const float spacing = 80; // Vertical spacing between Sections
+
+		var nextSeed = PeekNextSeed(out _);
+
+		if (!CanPurchaseNextUpgrade(nextSeed))
+		{
+			return;
+		}
+
+		BuyUpgrade(nextSeed.Value);
 
 		// Load the Section scene and instance it
 		var upgradableSectionScene = GD.Load<PackedScene>(UpgradableSection.ResourcePath);
@@ -117,7 +129,7 @@ public partial class WorldScene : Node2D
 
 		if (preparedSection is not null)
 		{
-			GD.Print($"Bought a {preparedSection.SeedType}!");
+			GD.Print($"Bought {preparedSection.SeedType}!");
 
 			_vbox.AddChild(preparedSection);
 
@@ -135,6 +147,14 @@ public partial class WorldScene : Node2D
 			}
 		}
 	}
+
+	private void BuyUpgrade(Seed nextUpgrade)
+	{
+		_points -= GetSeedCost(nextUpgrade);
+	}
+
+	private bool CanPurchaseNextUpgrade(Seed? nextSeed) =>
+		!nextSeed.HasValue || GetSeedCost(nextSeed.Value) <= _points;
 
 	private void HidePurchasing()
 	{
