@@ -5,7 +5,7 @@
 
 [node name="MainMenuScene" type="Node2D"]
 
-[node name="MainMenuSceneBackground" type="Sprite2D" parent="."]
+[node name="Background" type="Sprite2D" parent="."]
 position = Vector2(578, 578)
 scale = Vector2(1.12891, 1.12891)
 texture = ExtResource("1_b5m1o")

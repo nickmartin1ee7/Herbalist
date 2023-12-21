@@ -1,6 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://ci4b5mgekpaev"]
+[gd_scene load_steps=3 format=3 uid="uid://ci4b5mgekpaev"]
 
 [ext_resource type="Script" path="res://Scenes/WorldScene.cs" id="1_7ydjs"]
+[ext_resource type="Texture2D" uid="uid://bjy7ubcuxixqw" path="res://Assets/world_scene_background.jpg" id="2_if1o8"]
 
 [node name="WorldScene" type="Node2D"]
 script = ExtResource("1_7ydjs")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(576.25, 324)
+scale = Vector2(0.572601, 0.632813)
+texture = ExtResource("2_if1o8")
