@@ -6,21 +6,21 @@
 script = ExtResource("1_qcfjl")
 
 [node name="Button" type="Button" parent="."]
-offset_top = 32.0
+offset_top = 40.0
 offset_right = 120.0
-offset_bottom = 80.0
+offset_bottom = 88.0
 text = "0"
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
 offset_left = 128.0
-offset_top = 40.0
+offset_top = 48.0
 offset_right = 320.0
-offset_bottom = 72.0
+offset_bottom = 80.0
 
 [node name="Label" type="Label" parent="."]
-offset_left = 80.0
+offset_top = 8.0
 offset_right = 320.0
-offset_bottom = 23.0
+offset_bottom = 31.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Item Name"
 horizontal_alignment = 1

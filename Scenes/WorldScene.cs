@@ -42,7 +42,7 @@ public partial class WorldScene : Node2D
 	public long Points { get; set; } = StartingPoints;
 
 	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+	public override async void _Ready()
 	{
 		_vbox = GetNode<ScrollContainer>("ScrollContainer")
 			.GetNode<VBoxContainer>("VBoxContainer");
@@ -58,7 +58,16 @@ public partial class WorldScene : Node2D
 
 		_pointRenderCycler ??= Task.Run(PointRenderCyclerJob);
 
+		await ReloadDataFromStorage();
+
 		UpdateBuyButton(PeekNextSeed(out _));
+	}
+
+	private async Task ReloadDataFromStorage()
+	{
+		//  _sections;
+		// _lastSeedIndex;
+		// Points
 	}
 
 	private void UpdateBuyButton(Seed? seed)
@@ -105,7 +114,7 @@ public partial class WorldScene : Node2D
 	private void HandleNewUpgrade()
 	{
 		const float sectionHeight = 120; // Height of each Section
-		const float spacing = 80; // Vertical spacing between Sections
+		const float spacing = 120; // Vertical spacing between Sections
 
 		var nextSeed = PeekNextSeed(out _);
 
