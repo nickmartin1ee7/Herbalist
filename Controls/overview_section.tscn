@@ -1,6 +1,25 @@
-[gd_scene load_steps=2 format=3 uid="uid://dikrov6ek60gx"]
+[gd_scene load_steps=3 format=3 uid="uid://dikrov6ek60gx"]
 
 [ext_resource type="Script" path="res://Controls/OverviewSection.cs" id="1_8jiob"]
+[ext_resource type="Texture2D" uid="uid://o1qem5dnw46q" path="res://Assets/world_icon.jpg" id="2_doq1n"]
 
 [node name="OverviewSection" type="Node2D"]
+scale = Vector2(0.25, 0.25)
 script = ExtResource("1_8jiob")
+
+[node name="WorldIcon" type="Sprite2D" parent="."]
+position = Vector2(405, 404.838)
+scale = Vector2(0.970588, 0.970588)
+texture = ExtResource("2_doq1n")
+
+[node name="Label" type="Label" parent="WorldIcon"]
+offset_left = 901.515
+offset_top = -285.227
+offset_right = 1692.52
+offset_bottom = -21.2273
+scale = Vector2(2, 2)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 152
+text = "0 seeds"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://ci4b5mgekpaev"]
+[gd_scene load_steps=5 format=3 uid="uid://ci4b5mgekpaev"]
 
 [ext_resource type="Script" path="res://Scenes/WorldScene.cs" id="1_7ydjs"]
 [ext_resource type="Texture2D" uid="uid://dwjvfyf1rir43" path="res://Assets/world_scene_background_tall.jpg" id="2_0ubxp"]
 [ext_resource type="PackedScene" uid="uid://bxdiplngukc8m" path="res://Controls/upgradable_section.tscn" id="3_m712x"]
+[ext_resource type="PackedScene" uid="uid://dikrov6ek60gx" path="res://Controls/overview_section.tscn" id="4_o57fr"]
 
 [node name="WorldScene" type="Node2D"]
 script = ExtResource("1_7ydjs")
@@ -17,29 +18,32 @@ position = Vector2(152, 384)
 scale = Vector2(2.5, 2.5)
 
 [node name="UpgradableSection1" parent="." instance=ExtResource("3_m712x")]
-position = Vector2(152, 576)
+position = Vector2(152, 592)
 scale = Vector2(2.5, 2.5)
 
 [node name="UpgradableSection2" parent="." instance=ExtResource("3_m712x")]
-position = Vector2(152, 768)
+position = Vector2(152, 792)
 scale = Vector2(2.5, 2.5)
 
 [node name="UpgradableSection3" parent="." instance=ExtResource("3_m712x")]
-position = Vector2(152, 960)
+position = Vector2(152, 992)
 scale = Vector2(2.5, 2.5)
 
 [node name="UpgradableSection4" parent="." instance=ExtResource("3_m712x")]
-position = Vector2(152, 1152)
+position = Vector2(152, 1192)
 scale = Vector2(2.5, 2.5)
 
 [node name="UpgradableSection5" parent="." instance=ExtResource("3_m712x")]
-position = Vector2(152, 1344)
+position = Vector2(152, 1392)
 scale = Vector2(2.5, 2.5)
 
 [node name="UpgradableSection6" parent="." instance=ExtResource("3_m712x")]
-position = Vector2(152, 1536)
+position = Vector2(152, 1594)
 scale = Vector2(2.5, 2.5)
 
 [node name="UpgradableSection7" parent="." instance=ExtResource("3_m712x")]
-position = Vector2(152, 1728)
+position = Vector2(152, 1794)
 scale = Vector2(2.5, 2.5)
+
+[node name="OverviewSection" parent="." instance=ExtResource("4_o57fr")]
+position = Vector2(120, 128)
