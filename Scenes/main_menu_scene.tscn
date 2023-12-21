@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://bg0e8kmnin32s"]
+
+[ext_resource type="Texture2D" uid="uid://dirbr8asl2el3" path="res://Assets/main_menu_scene_background.jpg" id="1_b5m1o"]
+[ext_resource type="PackedScene" uid="uid://m6aej6fxqhj3" path="res://Controls/main_menu.tscn" id="1_yaff8"]
+
+[node name="MainMenuScene" type="Node2D"]
+
+[node name="MainMenuSceneBackground" type="Sprite2D" parent="."]
+position = Vector2(578, 578)
+scale = Vector2(1.12891, 1.12891)
+texture = ExtResource("1_b5m1o")
+metadata/_edit_lock_ = true
+
+[node name="MainMenu" parent="." instance=ExtResource("1_yaff8")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 400.0
+offset_top = 384.0
+offset_right = 400.0
+offset_bottom = 384.0
+grow_horizontal = 1
+grow_vertical = 1
+metadata/_edit_lock_ = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(576, 528)
