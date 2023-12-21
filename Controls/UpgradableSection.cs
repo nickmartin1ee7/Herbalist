@@ -42,7 +42,7 @@ public partial class UpgradableSection : Node2D
 		_progressBar = GetNode<ProgressBar>("ProgressBar");
 		_label = GetNode<Label>("Label");
 
-		_world = GetParent().GetNode<WorldScene>("WorldScene");
+		_world = GetParent().GetParent().GetParent().GetParent().GetNode<WorldScene>("WorldScene");
 
 		NotifyStateChanged();
 	}
@@ -74,9 +74,11 @@ public partial class UpgradableSection : Node2D
 	{
 		if (CanPurchaseMultiplier())
 		{
+			GD.Print($"Cannot afford to purchase upgrade for {SeedType}. {_world.Points} < {UpgradeCost}!");
 			return;
 		}
 
+		GD.Print($"Purchasing upgrade for {SeedType}. {_world.Points} < {UpgradeCost}!");
 		BuyMultiplier();
 	}
 
