@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 public partial class WorldScene : Node2D
 {
 	private const int PointRenderCyclerDelayMs = 5;
+	private const long StartingPoints = 200;
 
 	private VBoxContainer _vbox;
 	private Button _buyButton;
@@ -38,7 +39,7 @@ public partial class WorldScene : Node2D
 		return nextSeed;
 	}
 
-	public long Points { get; set; } = 100;
+	public long Points { get; set; } = StartingPoints;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -179,10 +180,10 @@ public partial class WorldScene : Node2D
 		return section;
 	}
 
-	private void OnPointCreated(object sender, EventArgs e)
+	private void OnPointCreated(object sender, long earnedPoints)
 	{
-		Points++;
+		Points += earnedPoints;
 
-		GD.Print($"Point created by {((UpgradableSection)sender).SeedType}! Points: {Points}");
+		GD.Print($"{earnedPoints} points earned from {((UpgradableSection)sender).SeedType}! Points: {Points}");
 	}
 }

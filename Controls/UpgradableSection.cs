@@ -30,7 +30,7 @@ public partial class UpgradableSection : Node2D
 
 	public const string ResourcePath = "res://Controls/upgradable_section.tscn";
 
-	public EventHandler PointCreated { get; set; }
+	public EventHandler<long> PointCreated { get; set; }
 	public int UpgradeCost =>
 		(int)SeedType * (int)(SeedCosts.Multiplier / 2d) * Multiplier;
 
@@ -59,7 +59,7 @@ public partial class UpgradableSection : Node2D
 		if (_progressBar.Value == 100d)
 		{
 			_progressBar.Value = 0d;
-			PointCreated?.Invoke(this, EventArgs.Empty);
+			PointCreated?.Invoke(this, Multiplier);
 		}
 	}
 
