@@ -34,6 +34,7 @@ offset_bottom = 520.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_4wxbr")
 
 [node name="CostLabel" type="Label" parent="CostPanel"]
+layout_mode = 0
 offset_right = 704.0
 offset_bottom = 67.0
 theme_override_font_sizes/font_size = 42

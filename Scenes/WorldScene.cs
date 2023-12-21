@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 public partial class WorldScene : Node2D
 {
 	private const int PointRenderCyclerDelayMs = 5;
-	private const int SeedCostMultiplier = 100;
 
 	private VBoxContainer _vbox;
 	private Button _buyButton;
@@ -15,11 +14,10 @@ public partial class WorldScene : Node2D
 	private Label _pointsLabel;
 	private Dictionary<Seed, UpgradableSection> _sections = new();
 	private int _lastSeedIndex;
-	private long _points = 100;
 	private readonly Seed[] _seeds = Enum.GetValues<Seed>();
 	private Task _pointRenderCycler;
 
-	private int GetSeedCost(Seed seed) => (int)seed * SeedCostMultiplier;
+	private int GetSeedCost(Seed seed) => (int)seed * SeedCosts.Multiplier;
 
 	private Seed? RequestNextSeed()
 	{
@@ -39,6 +37,8 @@ public partial class WorldScene : Node2D
 		var nextSeed = _seeds[nextSeedIndex];
 		return nextSeed;
 	}
+
+	public long Points { get; set; } = 100;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -68,7 +68,7 @@ public partial class WorldScene : Node2D
 		}
 
 		_buyButton.Text = $"Buy {seed} ({(int)seed}/second)";
-		_costLabel.Text = $"Costs {(int)seed * SeedCostMultiplier} seeds)";
+		_costLabel.Text = $"Costs {(int)seed * SeedCosts.Multiplier} seeds)";
 	}
 
 	private async Task PointRenderCyclerJob()
@@ -88,7 +88,7 @@ public partial class WorldScene : Node2D
 
 	private void UpdatePointsLabel()
 	{
-		_pointsLabel.Text = $"{_points} seeds";
+		_pointsLabel.Text = $"{Points} seeds";
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -150,11 +150,11 @@ public partial class WorldScene : Node2D
 
 	private void BuyUpgrade(Seed nextUpgrade)
 	{
-		_points -= GetSeedCost(nextUpgrade);
+		Points -= GetSeedCost(nextUpgrade);
 	}
 
 	private bool CanPurchaseNextUpgrade(Seed? nextSeed) =>
-		!nextSeed.HasValue || GetSeedCost(nextSeed.Value) <= _points;
+		!nextSeed.HasValue || GetSeedCost(nextSeed.Value) <= Points;
 
 	private void HidePurchasing()
 	{
@@ -181,8 +181,8 @@ public partial class WorldScene : Node2D
 
 	private void OnPointCreated(object sender, EventArgs e)
 	{
-		_points++;
+		Points++;
 
-		GD.Print($"Point created by {((UpgradableSection)sender).SeedType}! Points: {_points}");
+		GD.Print($"Point created by {((UpgradableSection)sender).SeedType}! Points: {Points}");
 	}
 }

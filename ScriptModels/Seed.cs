@@ -1,3 +1,9 @@
+
+public static class SeedCosts
+{
+    public const int Multiplier = 100;
+}
+
 public enum Seed
 {
     Unknown = 0,

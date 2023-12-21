@@ -7,6 +7,7 @@ public partial class UpgradableSection : Node2D
 	private Button _button;
 	private ProgressBar _progressBar;
 	private Label _label;
+	private WorldScene _world;
 	private Seed _seed;
 
 	public Seed SeedType
@@ -24,12 +25,14 @@ public partial class UpgradableSection : Node2D
 			NotifyStateChanged();
 		}
 	}
-	public double Multiplier { get; private set; }
-	public double Rate => (double)SeedType * Multiplier;
+	public int Multiplier { get; private set; } = 1;
+	public int Rate => (int)SeedType * Multiplier;
 
 	public const string ResourcePath = "res://Controls/upgradable_section.tscn";
 
 	public EventHandler PointCreated { get; set; }
+	public int UpgradeCost =>
+		(int)SeedType * (int)(SeedCosts.Multiplier / 2d) * Multiplier;
 
 	// Called when the node enters the scene tree for the first time.
 
@@ -38,6 +41,8 @@ public partial class UpgradableSection : Node2D
 		_button = GetNode<Button>("Button");
 		_progressBar = GetNode<ProgressBar>("ProgressBar");
 		_label = GetNode<Label>("Label");
+
+		_world = GetParent().GetNode<WorldScene>("WorldScene");
 
 		NotifyStateChanged();
 	}
@@ -58,16 +63,25 @@ public partial class UpgradableSection : Node2D
 		}
 	}
 
-	private void UpgradeMultiplier()
+	private void BuyMultiplier()
 	{
+		_world.Points -= UpgradeCost;
 		Multiplier++;
 		NotifyStateChanged();
 	}
 
 	private void _on_button_pressed()
 	{
-		UpgradeMultiplier();
+		if (CanPurchaseMultiplier())
+		{
+			return;
+		}
+
+		BuyMultiplier();
 	}
+
+	private bool CanPurchaseMultiplier() =>
+		_world.Points >= UpgradeCost;
 
 	private void NotifyStateChanged()
 	{
