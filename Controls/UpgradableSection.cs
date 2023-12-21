@@ -58,18 +58,16 @@ public partial class UpgradableSection : Node2D
 		{
 			var progress = _progressBar.Value;
 			// Ensure the progress value is within the valid range
-			var newProgress = Mathf.Clamp(progress + Multiplier,
+			var newProgress = Mathf.Clamp(progress + (double)Multiplier / 10,
 				_progressBar.MinValue,
 				_progressBar.MaxValue);
-
-			GD.Print($"Seed Type: {SeedType}, Previous Progress: {progress}, New Progress: {newProgress}, Multiplier: {Multiplier}");
 
 			CallThreadSafe(nameof(SetProgressBarValue), newProgress);
 
 			// 100ms = 10 iterations in 1 second
 			// 10ms = 100 iterations in 1 second
 			// 1ms = 1000 iterations in 1 second
-			await Task.Delay(5);
+			await Task.Delay(10);
 		}
 	}
 
@@ -82,7 +80,7 @@ public partial class UpgradableSection : Node2D
 		if (_progressBar.Value == 100d)
 		{
 			_progressBar.Value = 0d;
-			PointCreated?.Invoke(this, Rate);
+			PointCreated?.Invoke(this, (int)SeedType);
 		}
 	}
 
@@ -112,7 +110,7 @@ public partial class UpgradableSection : Node2D
 	{
 		if (_label is not null)
 		{
-			_label.Text = $"{SeedType} ({Rate}/second)";
+			_label.Text = $"{SeedType} ({(int)SeedType}/cycle)";
 		}
 
 		if (_button is not null)

@@ -139,7 +139,7 @@ public partial class WorldScene : Node2D
 			return;
 		}
 
-		_buyButton.Text = $"Buy {seed} ({(int)seed}/second)";
+		_buyButton.Text = $"Buy {seed} ({(int)seed}/cycle)";
 		_costLabel.Text = $"Costs {(int)seed * SeedCosts.Multiplier} seeds)";
 	}
 
