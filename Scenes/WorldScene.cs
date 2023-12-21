@@ -1,25 +1,37 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public partial class WorldScene : Node2D
 {
+	private const int PointRenderCyclerDelayMs = 5;
+
 	private VBoxContainer _vbox;
 	private Button _buyButton;
+	private Label _pointsLabel;
 	private Dictionary<Seed, UpgradableSection> _sections = new();
 	private int _lastSeedIndex;
+	private long _points;
 	private readonly Seed[] _seeds = Enum.GetValues<Seed>();
+	private Task _pointRenderCycler;
 
 	private Seed? RequestNextSeed()
 	{
-		var nextSeedIndex = _lastSeedIndex + 1;
+		var nextSeed = PeekNextSeed(out var nextSeedIndex);
+		_lastSeedIndex = nextSeedIndex;
+
+		return nextSeed;
+	}
+
+	private Seed? PeekNextSeed(out int nextSeedIndex)
+	{
+		nextSeedIndex = _lastSeedIndex + 1;
 
 		if (nextSeedIndex >= _seeds.Length)
 			return null;
 
 		var nextSeed = _seeds[nextSeedIndex];
-		_lastSeedIndex = nextSeedIndex;
-
 		return nextSeed;
 	}
 
@@ -30,6 +42,43 @@ public partial class WorldScene : Node2D
 			.GetNode<VBoxContainer>("VBoxContainer");
 
 		_buyButton = GetNode<Button>("BuyButton");
+
+		_pointsLabel = GetNode<OverviewSection>("OverviewSection")
+			.GetNode<Label>("Label");
+
+		_pointRenderCycler ??= Task.Run(PointRenderCyclerJob);
+
+		UpdateBuyButton(PeekNextSeed(out _));
+	}
+
+	private void UpdateBuyButton(Seed? seed)
+	{
+		if (seed is null)
+		{
+			return;
+		}
+
+		_buyButton.Text = $"Buy a {seed}";
+	}
+
+	private async Task PointRenderCyclerJob()
+	{
+		GD.Print($"{nameof(PointRenderCyclerJob)} started!");
+
+		while (true)
+		{
+			if (_pointsLabel is not null)
+			{
+				CallThreadSafe(nameof(UpdatePointsLabel));
+			}
+
+			await Task.Delay(PointRenderCyclerDelayMs);
+		}
+	}
+
+	private void UpdatePointsLabel()
+	{
+		_pointsLabel.Text = $"{_points} seeds";
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -61,16 +110,26 @@ public partial class WorldScene : Node2D
 
 		if (preparedSection is not null)
 		{
+			GD.Print($"Bought a {preparedSection.SeedType}!");
+
 			_vbox.AddChild(preparedSection);
-		}
-		else
-		{
-			// No more to buy!
-			_buyButton.Visible = false;
+
+			var nextUpgrade = PeekNextSeed(out _);
+			UpdateBuyButton(nextUpgrade);
+
+			GD.Print($"Next upgrade: {nextUpgrade}");
+
+			if (nextUpgrade is null)
+			{
+				// No more to buy!
+				GD.Print($"No more upgrades to buy!");
+
+				_buyButton.Visible = false;
+			}
 		}
 	}
 
-	private UpgradableSection? PrepareNextSection(UpgradableSection section)
+	private UpgradableSection PrepareNextSection(UpgradableSection section)
 	{
 		var nextSeed = RequestNextSeed();
 
@@ -80,9 +139,17 @@ public partial class WorldScene : Node2D
 		}
 
 		section.SeedType = nextSeed.Value;
+		section.PointCreated += OnPointCreated;
+
 		_sections.Add(nextSeed.Value, section);
 
 		return section;
 	}
 
+	private void OnPointCreated(object sender, EventArgs e)
+	{
+		_points++;
+
+		GD.Print($"Point created by {((UpgradableSection)sender).SeedType}! Points: {_points}");
+	}
 }

@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Threading.Tasks;
 
 public partial class UpgradableSection : Node2D
 {
@@ -23,10 +24,12 @@ public partial class UpgradableSection : Node2D
 			NotifyStateChanged();
 		}
 	}
-	public decimal Multiplier { get; private set; }
-	public decimal Rate => (decimal)SeedType * Multiplier;
+	public double Multiplier { get; private set; }
+	public double Rate => (double)SeedType * Multiplier;
 
 	public const string ResourcePath = "res://Controls/upgradable_section.tscn";
+
+	public EventHandler PointCreated { get; set; }
 
 	// Called when the node enters the scene tree for the first time.
 
@@ -42,6 +45,17 @@ public partial class UpgradableSection : Node2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		// Ensure the progress value is within the valid range
+		var newProgress = Mathf.Clamp(_progressBar.Value + delta * Rate, _progressBar.MinValue, _progressBar.MaxValue);
+
+		// Update the progress value
+		_progressBar.Value = newProgress;
+
+		if (_progressBar.Value == 100d)
+		{
+			_progressBar.Value = 0d;
+			PointCreated?.Invoke(this, EventArgs.Empty);
+		}
 	}
 
 	private void UpgradeMultiplier()
