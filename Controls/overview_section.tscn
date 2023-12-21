@@ -12,11 +12,11 @@ position = Vector2(405, 404.838)
 scale = Vector2(0.970588, 0.970588)
 texture = ExtResource("2_doq1n")
 
-[node name="Label" type="Label" parent="WorldIcon"]
-offset_left = 901.515
-offset_top = -285.227
-offset_right = 1692.52
-offset_bottom = -21.2273
+[node name="Label" type="Label" parent="."]
+offset_left = 1280.0
+offset_top = 128.0
+offset_right = 2071.0
+offset_bottom = 392.0
 scale = Vector2(2, 2)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 152
