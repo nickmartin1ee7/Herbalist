@@ -1,7 +1,7 @@
 
 public static class SeedCosts
 {
-    public const int Multiplier = 100;
+    public const int Multiplier = 50;
 }
 
 public enum Seed
