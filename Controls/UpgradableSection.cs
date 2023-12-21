@@ -92,7 +92,7 @@ public partial class UpgradableSection : Node2D
 
 		if (_button is not null)
 		{
-			_button.Text = $"x{Multiplier}";
+			_button.Text = $"x{Multiplier}{System.Environment.NewLine}Upgrade: {UpgradeCost}";
 		}
 	}
 }

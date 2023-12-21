@@ -7,12 +7,12 @@ script = ExtResource("1_qcfjl")
 
 [node name="Button" type="Button" parent="."]
 offset_top = 32.0
-offset_right = 64.0
+offset_right = 120.0
 offset_bottom = 80.0
 text = "0"
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
-offset_left = 80.0
+offset_left = 128.0
 offset_top = 40.0
 offset_right = 320.0
 offset_bottom = 72.0
