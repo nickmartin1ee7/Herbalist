@@ -59,7 +59,7 @@ public partial class UpgradableSection : Node2D
 		if (_progressBar.Value == 100d)
 		{
 			_progressBar.Value = 0d;
-			PointCreated?.Invoke(this, Multiplier);
+			PointCreated?.Invoke(this, Rate);
 		}
 	}
 
@@ -89,7 +89,7 @@ public partial class UpgradableSection : Node2D
 	{
 		if (_label is not null)
 		{
-			_label.Text = SeedType.ToString();
+			_label.Text = $"{SeedType} ({Rate}/second)";
 		}
 
 		if (_button is not null)
