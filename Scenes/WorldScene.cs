@@ -35,25 +35,6 @@ public partial class WorldScene : Node2D
 
     private int GetSeedCost(Seed seed) => (int)seed * SeedCosts.Multiplier;
 
-    private Seed? RequestNextSeed()
-    {
-        var nextSeed = PeekNextSeed(out var nextSeedIndex);
-        _lastSeedIndex = nextSeedIndex;
-
-        return nextSeed;
-    }
-
-    private Seed? PeekNextSeed(out int nextSeedIndex)
-    {
-        nextSeedIndex = _lastSeedIndex + 1;
-
-        if (nextSeedIndex >= _seeds.Length)
-            return null;
-
-        var nextSeed = _seeds[nextSeedIndex];
-        return nextSeed;
-    }
-
     public long Points { get; set; } = StartingPoints;
 
     // Called when the node enters the scene tree for the first time.
@@ -105,6 +86,26 @@ public partial class WorldScene : Node2D
         }
     }
 
+    private Seed? RequestNextSeed()
+    {
+        var nextSeed = PeekNextSeed(out var nextSeedIndex);
+        _lastSeedIndex = nextSeedIndex;
+
+        return nextSeed;
+    }
+
+    private Seed? PeekNextSeed(out int nextSeedIndex)
+    {
+        nextSeedIndex = _lastSeedIndex + 1;
+
+        if (nextSeedIndex >= _seeds.Length)
+            return null;
+
+        var nextSeed = _seeds[nextSeedIndex];
+        return nextSeed;
+    }
+
+
     private void NavigateToShop()
     {
         // TODO: Implement shop
@@ -136,7 +137,7 @@ public partial class WorldScene : Node2D
 
     private void UpdatePlaytimeAmountLabel()
     {
-        _playtimeAmountLabel.Text = $"{DateTime.Now - _startTime:mm\\:ss\\.fff}";
+        _playtimeAmountLabel.Text = $"{DateTime.Now - _startTime:hh\\:mm\\:ss\\.fff}";
     }
 
     private void ReloadDataFromStorage()

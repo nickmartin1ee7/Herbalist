@@ -40,6 +40,6 @@ vertical_alignment = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 152
-text = "12:34.000"
+text = "00:12:34.000"
 horizontal_alignment = 1
 vertical_alignment = 1
