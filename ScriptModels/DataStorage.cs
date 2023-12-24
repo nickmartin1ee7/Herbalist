@@ -1,39 +1,41 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 
 using Godot;
 
 public static class DataStorage
 {
-    private const string _filePath = "user://data.json";
+    // Avoid using directly
+    private static readonly string _filePath = Path.Combine(OS.GetUserDataDir(), "data.json");
+
+    private static FileInfo DataFile => new(_filePath);
+
+    public static bool HasPreviousSession
+        => DataFile.Exists && DataFile.Length > 0;
+
+    public static void Delete() => DataFile.Delete();
 
     public static void Write(Dictionary<string, string> data)
     {
-        var fa = FileAccess.Open(_filePath, FileAccess.ModeFlags.Write);
+        var dataStr = JsonSerializer.Serialize(data);
 
-        if (fa is null)
-        {
-            GD.PrintErr($"{nameof(DataStorage)} {nameof(Write)} operation failed!");
-            return;
-        }
+        GD.Print($"{nameof(DataStorage)} {nameof(Write)} wrote {data.Count} values to {DataFile.FullName}. {dataStr}");
 
-        fa.StoreString(JsonSerializer.Serialize(data));
+        File.WriteAllText(DataFile.FullName, dataStr);
     }
 
     public static Dictionary<string, string> Read()
     {
         try
         {
-            var fa = FileAccess.Open(_filePath, FileAccess.ModeFlags.Read);
-
-            if (fa is null)
+            if (!DataFile.Exists)
             {
-                GD.PrintErr($"{nameof(DataStorage)} {nameof(Read)} operation failed!");
                 return null;
             }
 
-            var content = fa.GetAsText();
+            var content = File.ReadAllText(DataFile.FullName);
 
             if (string.IsNullOrEmpty(content))
             {
@@ -41,10 +43,15 @@ public static class DataStorage
                 return null;
             }
 
-            return JsonSerializer.Deserialize<Dictionary<string, string>>(content);
+            var data = JsonSerializer.Deserialize<Dictionary<string, string>>(content);
+
+            GD.Print($"{nameof(DataStorage)} {nameof(Read)} read {data.Count} values from {DataFile.FullName}. {content}");
+
+            return data;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            GD.PrintErr($"{nameof(DataStorage)} {nameof(Read)} failed.", ex);
             return null;
         }
     }

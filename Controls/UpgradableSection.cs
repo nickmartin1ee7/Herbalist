@@ -8,7 +8,7 @@ public partial class UpgradableSection : Node2D
 	// 100ms = 10 iterations in 1 second
 	// 10ms = 100 iterations in 1 second
 	// 1ms = 1000 iterations in 1 second
-	private const int ProgressCycleDelay = 33;
+	private const int ProgressCycleDelay = 5;
 
 	private Button _upgradeButton;
 	private ProgressBar _seedProgressBar;

@@ -47,6 +47,8 @@ metadata/_edit_lock_ = true
 
 [node name="FlowersVBoxContainer" type="VBoxContainer" parent="FlowersScrollContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 metadata/_edit_lock_ = true
 
 [node name="FlowerHBoxContainer" type="HBoxContainer" parent="."]
@@ -111,6 +113,3 @@ layout_mode = 2
 layout_mode = 2
 theme = ExtResource("13_uxe50")
 text = "Shop"
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(540, 1200)

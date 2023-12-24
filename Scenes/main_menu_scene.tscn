@@ -32,7 +32,7 @@ layout_mode = 2
 theme = ExtResource("3_85jj5")
 text = "Start"
 
-[node name="Container" type="Container" parent="Buttons"]
+[node name="Spacer" type="Container" parent="Buttons"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
