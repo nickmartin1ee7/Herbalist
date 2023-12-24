@@ -38,11 +38,17 @@ scale = Vector2(0.914063, 1)
 texture = ExtResource("5_gcb1b")
 metadata/_edit_lock_ = true
 
+[node name="FlowersWoodenBorderIcon" type="Sprite2D" parent="."]
+position = Vector2(549, 1944)
+scale = Vector2(0.916016, 1)
+texture = ExtResource("5_gcb1b")
+metadata/_edit_lock_ = true
+
 [node name="FlowersScrollContainer" type="ScrollContainer" parent="."]
 offset_left = 96.0
 offset_top = 344.0
 offset_right = 1000.0
-offset_bottom = 2168.0
+offset_bottom = 1934.0
 metadata/_edit_lock_ = true
 
 [node name="FlowersVBoxContainer" type="VBoxContainer" parent="FlowersScrollContainer"]
@@ -99,6 +105,7 @@ offset_top = 2216.0
 offset_right = 1008.0
 offset_bottom = 2344.0
 alignment = 1
+metadata/_edit_lock_ = true
 
 [node name="MainMenuButton" type="Button" parent="FooterHBoxContainer"]
 layout_mode = 2
