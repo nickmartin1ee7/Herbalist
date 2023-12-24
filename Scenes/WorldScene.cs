@@ -20,9 +20,6 @@ public partial class WorldScene : Node2D
 
     private Dictionary<Seed, Sprite2D> _flowerSprites;
     private VBoxContainer _flowersVBoxContainer;
-    private Button _buyButton;
-    private Panel _costPanel;
-    private Label _costLabel;
     private Label _pointsLabel;
     private Label _playtimeAmountLabel;
     private Button _forageButton;
@@ -237,6 +234,7 @@ public partial class WorldScene : Node2D
     {
         if (seed is null)
         {
+            HidePurchasing();
             return;
         }
 
@@ -316,6 +314,8 @@ public partial class WorldScene : Node2D
 
         if (!CanPurchaseNextUpgrade(nextSeed))
         {
+            GD.Print($"Cannot purchase: {nextSeed}");
+            HidePurchasing();
             return;
         }
 
@@ -338,6 +338,7 @@ public partial class WorldScene : Node2D
             GD.Print($"Bought {preparedSection.SeedType}!");
 
             _flowersVBoxContainer.AddChild(preparedSection);
+            GD.Print($"DEBUG: _flowersVBoxContainer.SizeFlagsVertical = {_flowersVBoxContainer.SizeFlagsVertical}");
 
             var nextUpgrade = PeekNextSeed(out _);
             UpdateBuyButton(nextUpgrade);
@@ -356,6 +357,7 @@ public partial class WorldScene : Node2D
 
     private void BuyUpgrade(Seed nextUpgrade)
     {
+        GD.Print($"Buying: {nextUpgrade}");
         Points -= GetSeedCost(nextUpgrade);
         ShowFlower(nextUpgrade);
     }
@@ -371,12 +373,11 @@ public partial class WorldScene : Node2D
     }
 
     private bool CanPurchaseNextUpgrade(Seed? nextSeed) =>
-        !nextSeed.HasValue || GetSeedCost(nextSeed.Value) <= Points;
+        nextSeed.HasValue && GetSeedCost(nextSeed.Value) <= Points;
 
     private void HidePurchasing()
     {
-        _buyButton.Text = "Sold Out";
-        _costPanel.Visible = false;
+        _shopButton.Text = "Sold Out";
     }
 
     private UpgradableSection PrepareNextSection(UpgradableSection section, Seed? nextSeed = null)
