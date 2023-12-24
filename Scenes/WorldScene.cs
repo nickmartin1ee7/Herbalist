@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
+using Godot;
+
 public partial class WorldScene : Node2D
 {
     private const float SectionHeight = 120; // Height of each Section
@@ -16,6 +18,7 @@ public partial class WorldScene : Node2D
     private readonly Seed[] _seeds = Enum.GetValues<Seed>();
     private readonly Dictionary<Seed, UpgradableSection> _sections = new();
 
+    private Dictionary<Seed, Sprite2D> _flowerSprites;
     private VBoxContainer _flowersVBoxContainer;
     private Button _buyButton;
     private Panel _costPanel;
@@ -74,6 +77,8 @@ public partial class WorldScene : Node2D
         _mainMenuButton.Pressed += NavigateToMainMenu;
         _shopButton.Pressed += NavigateToShop;
 
+        PopulateAndHideFlowersDictionary();
+
         _playtimeAmountRenderCycler ??= Task.Run(PlaytimeAmountRenderCyclerJob);
         _pointRenderCycler ??= Task.Run(PointRenderCyclerJob);
         _dataSaverCycler ??= Task.Run(DataSaverCyclerJob);
@@ -81,6 +86,23 @@ public partial class WorldScene : Node2D
         ReloadDataFromStorage();
 
         UpdateBuyButton(PeekNextSeed(out _));
+    }
+
+    private void PopulateAndHideFlowersDictionary()
+    {
+        _flowerSprites = new();
+        var flowerBox = GetNode<HBoxContainer>("FlowerHBoxContainer");
+        _flowerSprites.Add(Seed.Grass, flowerBox.GetNode<Sprite2D>(nameof(Seed.Grass)));
+        _flowerSprites.Add(Seed.Marigold, flowerBox.GetNode<Sprite2D>(nameof(Seed.Marigold)));
+        _flowerSprites.Add(Seed.Sunflower, flowerBox.GetNode<Sprite2D>(nameof(Seed.Sunflower)));
+        _flowerSprites.Add(Seed.Rose, flowerBox.GetNode<Sprite2D>(nameof(Seed.Rose)));
+        _flowerSprites.Add(Seed.Iris, flowerBox.GetNode<Sprite2D>(nameof(Seed.Iris)));
+        _flowerSprites.Add(Seed.Daisy, flowerBox.GetNode<Sprite2D>(nameof(Seed.Daisy)));
+
+        foreach (var flowerSprite in _flowerSprites)
+        {
+            flowerSprite.Value.Visible = false;
+        }
     }
 
     private void NavigateToShop()
@@ -313,6 +335,17 @@ public partial class WorldScene : Node2D
     private void BuyUpgrade(Seed nextUpgrade)
     {
         Points -= GetSeedCost(nextUpgrade);
+        ShowFlower(nextUpgrade);
+    }
+
+    private void ShowFlower(Seed nextUpgrade)
+    {
+        if (!_flowerSprites.TryGetValue(nextUpgrade, out var flowerSprite))
+        {
+            return;
+        }
+
+        flowerSprite.Visible = true;
     }
 
     private bool CanPurchaseNextUpgrade(Seed? nextSeed) =>
