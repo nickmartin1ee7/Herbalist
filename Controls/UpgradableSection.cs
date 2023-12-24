@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 using Godot;
 
-public partial class UpgradableSection : Control
+public partial class UpgradableSection : Node2D
 {
 	private Button _upgradeButton;
 	private ProgressBar _seedProgressBar;

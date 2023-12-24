@@ -131,7 +131,7 @@ offset_bottom = 2344.0
 alignment = 1
 metadata/_edit_lock_ = true
 
-[node name="Main Menu" type="Button" parent="FooterHBoxContainer"]
+[node name="MainMenuButton" type="Button" parent="FooterHBoxContainer"]
 layout_mode = 2
 theme = ExtResource("13_uxe50")
 text = "Main Menu"
@@ -140,7 +140,7 @@ text = "Main Menu"
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 
-[node name="Shop" type="Button" parent="FooterHBoxContainer"]
+[node name="ShopButton" type="Button" parent="FooterHBoxContainer"]
 layout_mode = 2
 theme = ExtResource("13_uxe50")
 text = "Shop"
