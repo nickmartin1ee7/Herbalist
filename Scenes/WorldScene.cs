@@ -345,7 +345,6 @@ public partial class WorldScene : Node2D
 		if (!CanPurchaseNextUpgrade(nextSeed))
 		{
 			GD.Print($"Cannot purchase: {nextSeed}");
-			HidePurchasing();
 			return;
 		}
 
