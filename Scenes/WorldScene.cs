@@ -1,9 +1,10 @@
-using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+
+using Godot;
 
 public partial class WorldScene : Node2D
 {
@@ -11,7 +12,7 @@ public partial class WorldScene : Node2D
 	private const float SectionSpacing = 120; // Vertical spacing between Sections
 	private const int DataSaverCyclerDelayMs = 5000;
 	private const int PointRenderCyclerDelayMs = 5;
-	private const long StartingPoints = 300;
+	private const long StartingPoints = 30000000;
 
 	private VBoxContainer _vbox;
 	private Button _buyButton;
@@ -48,7 +49,7 @@ public partial class WorldScene : Node2D
 	public long Points { get; set; } = StartingPoints;
 
 	// Called when the node enters the scene tree for the first time.
-	public override async void _Ready()
+	public override void _Ready()
 	{
 		_vbox = GetNode<ScrollContainer>("ScrollContainer")
 			.GetNode<VBoxContainer>("VBoxContainer");
@@ -65,14 +66,14 @@ public partial class WorldScene : Node2D
 		_pointRenderCycler ??= Task.Run(PointRenderCyclerJob);
 		_dataSaverCycler ??= Task.Run(DataSaverCyclerJob);
 
-		await ReloadDataFromStorage();
+		ReloadDataFromStorage();
 
 		UpdateBuyButton(PeekNextSeed(out _));
 	}
 
-	private async Task ReloadDataFromStorage()
+	private void ReloadDataFromStorage()
 	{
-		var data = await DataStorage.Read();
+		var data = DataStorage.Read();
 
 		if (data is null)
 		{
@@ -178,7 +179,7 @@ public partial class WorldScene : Node2D
 		{
 			try
 			{
-				await TrySaveData();
+				TrySaveData();
 				GD.Print($"{nameof(DataSaverCyclerJob)} data saved!");
 
 			}
@@ -191,7 +192,7 @@ public partial class WorldScene : Node2D
 		}
 	}
 
-	private async Task TrySaveData()
+	private void TrySaveData()
 	{
 		var sectionsStr = JsonSerializer.Serialize(_sections.Select(s => s.Key).ToArray());
 		var sectionsUpgrades = JsonSerializer.Serialize(_sections.Select(s => s.Value.Multiplier).ToArray());
@@ -207,7 +208,7 @@ public partial class WorldScene : Node2D
 			{ $"{nameof(_sections)}.{nameof(UpgradableSection.Multiplier)}", sectionsUpgrades}
 		};
 
-		await DataStorage.Write(data);
+		DataStorage.Write(data);
 	}
 
 	private void UpdatePointsLabel()

@@ -1,29 +1,84 @@
-[gd_scene load_steps=2 format=3 uid="uid://bxdiplngukc8m"]
+[gd_scene load_steps=4 format=3 uid="uid://bxdiplngukc8m"]
 
 [ext_resource type="Script" path="res://Controls/UpgradableSection.cs" id="1_qcfjl"]
+[ext_resource type="Texture2D" uid="uid://ccqtyu8wmaxqs" path="res://Assets/upgrade_arrow.png" id="2_dx2bl"]
+[ext_resource type="Texture2D" uid="uid://c05vugpubsxb1" path="res://Assets/seeds.png" id="3_0pcdk"]
 
 [node name="UpgradableSection" type="Node2D"]
 script = ExtResource("1_qcfjl")
 
-[node name="Button" type="Button" parent="."]
-offset_top = 40.0
-offset_right = 120.0
-offset_bottom = 88.0
-text = "0"
-
-[node name="ProgressBar" type="ProgressBar" parent="."]
+[node name="SeedProgressBar" type="ProgressBar" parent="."]
 offset_left = 128.0
 offset_top = 48.0
 offset_right = 320.0
 offset_bottom = 80.0
 
-[node name="Label" type="Label" parent="."]
-offset_top = 8.0
-offset_right = 320.0
-offset_bottom = 31.0
+[node name="ItemNameLabel" type="Label" parent="."]
+offset_left = 128.0
+offset_right = 247.0
+offset_bottom = 40.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Item Name"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[node name="ItemRateLabel" type="Label" parent="."]
+offset_left = 256.0
+offset_right = 320.0
+offset_bottom = 29.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 12
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ItemRateLabel2" type="Label" parent="."]
+offset_left = 268.0
+offset_top = 24.0
+offset_right = 320.0
+offset_bottom = 48.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 12
+text = "per cycle"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SeedIcon" type="Sprite2D" parent="."]
+position = Vector2(256, 37)
+scale = Vector2(0.0581818, 0.0581818)
+texture = ExtResource("3_0pcdk")
+
+[node name="UpgradePanel" type="PanelContainer" parent="."]
+offset_right = 120.0
+offset_bottom = 48.0
+
+[node name="UpgradeButton" type="Button" parent="UpgradePanel"]
+layout_mode = 2
+text = "1000x"
+
+[node name="UpgradeIcon" type="Sprite2D" parent="UpgradePanel"]
+position = Vector2(102, 24)
+scale = Vector2(0.0706278, 0.0695067)
+texture = ExtResource("2_dx2bl")
+
+[node name="SeedCostPanel" type="Panel" parent="."]
+offset_left = 8.0
+offset_top = 48.0
+offset_right = 112.0
+offset_bottom = 80.0
+
+[node name="SeedCostLabel" type="Label" parent="SeedCostPanel"]
+layout_mode = 0
+offset_left = 8.0
+offset_right = 64.0
+offset_bottom = 32.0
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SeedIcon" type="Sprite2D" parent="SeedCostPanel"]
+position = Vector2(80, 16)
+scale = Vector2(0.09, 0.09)
+texture = ExtResource("3_0pcdk")
+
+[connection signal="pressed" from="UpgradePanel/UpgradeButton" to="." method="_on_button_pressed"]

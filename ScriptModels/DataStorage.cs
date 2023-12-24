@@ -1,31 +1,51 @@
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
-using System.Threading.Tasks;
+
+using Godot;
 
 public static class DataStorage
 {
-    private const string _file = "data.json";
-    private static FileInfo SaveFile => new FileInfo(_file);
+    private const string _filePath = "user://data.json";
 
-    public static Task Write(Dictionary<string, string> data)
+    public static void Write(Dictionary<string, string> data)
     {
-        if (!SaveFile.Exists)
+        var fa = FileAccess.Open(_filePath, FileAccess.ModeFlags.Write);
+
+        if (fa is null)
         {
-            File.Create(SaveFile.FullName);
+            GD.PrintErr($"{nameof(DataStorage)} {nameof(Write)} operation failed!");
+            return;
         }
 
-        return File.WriteAllTextAsync(SaveFile.FullName, JsonSerializer.Serialize(data));
+        fa.StoreString(JsonSerializer.Serialize(data));
     }
 
-    public static ValueTask<Dictionary<string, string>> Read()
+    public static Dictionary<string, string> Read()
     {
-        if (!SaveFile.Exists)
+        try
         {
-            return ValueTask.FromResult<Dictionary<string, string>>(null);
-        }
+            var fa = FileAccess.Open(_filePath, FileAccess.ModeFlags.Read);
 
-        using var stream = SaveFile.OpenRead();
-        return JsonSerializer.DeserializeAsync<Dictionary<string, string>>(stream);
+            if (fa is null)
+            {
+                GD.PrintErr($"{nameof(DataStorage)} {nameof(Read)} operation failed!");
+                return null;
+            }
+
+            var content = fa.GetAsText();
+
+            if (string.IsNullOrEmpty(content))
+            {
+                GD.Print($"{nameof(DataStorage)} {nameof(Read)} no content.");
+                return null;
+            }
+
+            return JsonSerializer.Deserialize<Dictionary<string, string>>(content);
+        }
+        catch (Exception)
+        {
+            return null;
+        }
     }
 }

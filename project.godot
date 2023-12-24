@@ -13,7 +13,8 @@ config_version=5
 config/name="Herbalist"
 run/main_scene="res://Scenes/main_menu_scene.tscn"
 config/features=PackedStringArray("4.2", "C#", "Mobile")
-boot_splash/image="res://Assets/icon.jpg"
+boot_splash/bg_color=Color(0.890196, 0.976471, 0.929412, 1)
+boot_splash/image="res://Assets/herbalist_welcome.png"
 config/icon="res://Assets/icon.jpg"
 
 [display]

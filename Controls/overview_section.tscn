@@ -1,25 +1,48 @@
 [gd_scene load_steps=3 format=3 uid="uid://dikrov6ek60gx"]
 
 [ext_resource type="Script" path="res://Controls/OverviewSection.cs" id="1_8jiob"]
-[ext_resource type="Texture2D" uid="uid://o1qem5dnw46q" path="res://Assets/world_icon.jpg" id="2_doq1n"]
+[ext_resource type="Texture2D" uid="uid://c05vugpubsxb1" path="res://Assets/seeds.png" id="2_1lt25"]
 
 [node name="OverviewSection" type="Node2D"]
 scale = Vector2(0.25, 0.25)
 script = ExtResource("1_8jiob")
 
-[node name="WorldIcon" type="Sprite2D" parent="."]
-position = Vector2(405, 404.838)
-scale = Vector2(0.970588, 0.970588)
-texture = ExtResource("2_doq1n")
+[node name="PanelContainer" type="PanelContainer" parent="."]
+offset_right = 896.0
+offset_bottom = 480.0
 
-[node name="Label" type="Label" parent="."]
-offset_left = 1280.0
-offset_top = 128.0
-offset_right = 2071.0
-offset_bottom = 392.0
-scale = Vector2(2, 2)
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="PlaytimeLabel" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 152
-text = "0 seeds"
+text = "Playtime"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="PlaytimeAmountLabel" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 152
+text = "12:34.000"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SeedsLabel" type="Label" parent="."]
+offset_left = 896.0
+offset_top = 64.0
+offset_right = 3648.0
+offset_bottom = 447.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 280
+text = "100,000,000,000"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="SeedIcon" type="Sprite2D" parent="."]
+position = Vector2(3904, 256)
+scale = Vector2(1.79705, 1.79705)
+texture = ExtResource("2_1lt25")

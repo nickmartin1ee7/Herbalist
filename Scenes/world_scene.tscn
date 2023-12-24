@@ -1,10 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://ci4b5mgekpaev"]
+[gd_scene load_steps=13 format=3 uid="uid://ci4b5mgekpaev"]
 
 [ext_resource type="Script" path="res://Scenes/WorldScene.cs" id="1_7ydjs"]
 [ext_resource type="Texture2D" uid="uid://dwjvfyf1rir43" path="res://Assets/world_scene_background_tall.jpg" id="2_0ubxp"]
+[ext_resource type="PackedScene" uid="uid://bxdiplngukc8m" path="res://Controls/upgradable_section.tscn" id="4_n8qwc"]
 [ext_resource type="PackedScene" uid="uid://dikrov6ek60gx" path="res://Controls/overview_section.tscn" id="4_o57fr"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4wxbr"]
+[ext_resource type="Texture2D" uid="uid://c7qiormipeqhl" path="res://Assets/wooden_border_short.png" id="4_xi2fs"]
+[ext_resource type="Texture2D" uid="uid://blnhdlv12sgwi" path="res://Assets/wooden_border.png" id="5_gcb1b"]
+[ext_resource type="Texture2D" uid="uid://d4d0nsl5vxppi" path="res://Assets/marigold.png" id="7_3xxrr"]
+[ext_resource type="Texture2D" uid="uid://bx25gxqg0xn81" path="res://Assets/grass.png" id="8_n2ath"]
+[ext_resource type="Texture2D" uid="uid://dvft1m1iy7oky" path="res://Assets/Sunflower.png" id="9_od7np"]
+[ext_resource type="Texture2D" uid="uid://bnnfuoklwqsba" path="res://Assets/Rose.png" id="10_pcktm"]
+[ext_resource type="Texture2D" uid="uid://clrhem7lvnqwm" path="res://Assets/Iris.png" id="11_4k8rx"]
+[ext_resource type="Texture2D" uid="uid://cvmrv6apgwp1y" path="res://Assets/Daisy.png" id="12_1arwj"]
 
 [node name="WorldScene" type="Node2D"]
 script = ExtResource("1_7ydjs")
@@ -15,42 +22,102 @@ texture = ExtResource("2_0ubxp")
 metadata/_edit_lock_ = true
 
 [node name="OverviewSection" parent="." instance=ExtResource("4_o57fr")]
-position = Vector2(120, 128)
+position = Vector2(96, 144)
+scale = Vector2(0.22, 0.22)
 metadata/_edit_lock_ = true
 
-[node name="BuyButton" type="Button" parent="."]
-offset_left = 120.0
-offset_top = 360.0
-offset_right = 968.0
-offset_bottom = 456.0
-theme_override_font_sizes/font_size = 46
-text = "Buy Next"
-
-[node name="CostPanel" type="Panel" parent="."]
-offset_left = 192.0
-offset_top = 456.0
-offset_right = 896.0
-offset_bottom = 520.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_4wxbr")
-
-[node name="CostLabel" type="Label" parent="CostPanel"]
-layout_mode = 0
-offset_right = 704.0
-offset_bottom = 67.0
-theme_override_font_sizes/font_size = 42
-text = "Costs 0 seeds"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
-offset_left = 120.0
-offset_top = 523.0
-offset_right = 936.0
-offset_bottom = 2128.0
+[node name="OverviewWoodenBorderShortIcon" type="Sprite2D" parent="."]
+position = Vector2(328, 187.873)
+rotation = 1.5708
+scale = Vector2(0.74912, 1)
+texture = ExtResource("4_xi2fs")
 metadata/_edit_lock_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+[node name="OverviewWoodenBorderIcon" type="Sprite2D" parent="."]
+position = Vector2(548, 296)
+scale = Vector2(0.914063, 1)
+texture = ExtResource("5_gcb1b")
+metadata/_edit_lock_ = true
+
+[node name="FlowersScrollContainer" type="ScrollContainer" parent="."]
+offset_left = 96.0
+offset_top = 344.0
+offset_right = 1000.0
+offset_bottom = 2168.0
+metadata/_edit_lock_ = true
+
+[node name="FlowersVBoxContainer" type="VBoxContainer" parent="FlowersScrollContainer"]
 layout_mode = 2
 metadata/_edit_lock_ = true
 
-[connection signal="pressed" from="BuyButton" to="." method="_on_buy_button_pressed"]
+[node name="UpgradableSection" parent="FlowersScrollContainer/FlowersVBoxContainer" instance=ExtResource("4_n8qwc")]
+visible = false
+position = Vector2(32, 0)
+scale = Vector2(2.575, 2.575)
+
+[node name="UpgradableSection2" parent="FlowersScrollContainer/FlowersVBoxContainer" instance=ExtResource("4_n8qwc")]
+visible = false
+position = Vector2(32, 280)
+scale = Vector2(2.575, 2.575)
+
+[node name="UpgradableSection3" parent="FlowersScrollContainer/FlowersVBoxContainer" instance=ExtResource("4_n8qwc")]
+visible = false
+position = Vector2(32, 560)
+scale = Vector2(2.575, 2.575)
+
+[node name="UpgradableSection4" parent="FlowersScrollContainer/FlowersVBoxContainer" instance=ExtResource("4_n8qwc")]
+visible = false
+position = Vector2(32, 840)
+scale = Vector2(2.575, 2.575)
+
+[node name="UpgradableSection5" parent="FlowersScrollContainer/FlowersVBoxContainer" instance=ExtResource("4_n8qwc")]
+visible = false
+position = Vector2(32, 1112)
+scale = Vector2(2.575, 2.575)
+
+[node name="UpgradableSection6" parent="FlowersScrollContainer/FlowersVBoxContainer" instance=ExtResource("4_n8qwc")]
+visible = false
+position = Vector2(32, 1392)
+scale = Vector2(2.575, 2.575)
+
+[node name="FlowerHBoxContainer" type="HBoxContainer" parent="."]
+offset_left = 149.0
+offset_top = 1976.0
+offset_right = 1069.0
+offset_bottom = 2192.0
+metadata/_edit_lock_ = true
+
+[node name="Grass" type="Sprite2D" parent="FlowerHBoxContainer"]
+position = Vector2(51, 136)
+texture = ExtResource("8_n2ath")
+metadata/_edit_lock_ = true
+
+[node name="Marigold" type="Sprite2D" parent="FlowerHBoxContainer"]
+position = Vector2(219, 104)
+scale = Vector2(0.521429, 0.521429)
+texture = ExtResource("7_3xxrr")
+metadata/_edit_lock_ = true
+
+[node name="Sunflower" type="Sprite2D" parent="FlowerHBoxContainer"]
+position = Vector2(363, 112)
+scale = Vector2(0.265517, 0.265517)
+texture = ExtResource("9_od7np")
+metadata/_edit_lock_ = true
+
+[node name="Rose" type="Sprite2D" parent="FlowerHBoxContainer"]
+position = Vector2(523, 112)
+scale = Vector2(0.467949, 0.467949)
+texture = ExtResource("10_pcktm")
+metadata/_edit_lock_ = true
+
+[node name="Iris" type="Sprite2D" parent="FlowerHBoxContainer"]
+position = Vector2(659, 112)
+scale = Vector2(0.434143, 0.434143)
+texture = ExtResource("11_4k8rx")
+metadata/_edit_lock_ = true
+
+[node name="Daisy" type="Sprite2D" parent="FlowerHBoxContainer"]
+position = Vector2(787, 104)
+scale = Vector2(0.262048, 0.262048)
+texture = ExtResource("12_1arwj")
+metadata/_edit_lock_ = true
