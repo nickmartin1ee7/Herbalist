@@ -13,7 +13,7 @@ public partial class WorldScene : Node2D
     private const int DataSaverCyclerDelayMs = 5000;
     private const int PointRenderCyclerDelayMs = 5;
     private const int PlaytimeAmountRenderCyclerDelayMs = 5;
-    private const long StartingPoints = 30000000;
+    private const long StartingPoints = 10;
 
     private readonly Seed[] _seeds = Enum.GetValues<Seed>();
     private readonly Dictionary<Seed, UpgradableSection> _sections = new();
