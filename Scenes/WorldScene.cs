@@ -117,7 +117,7 @@ public partial class WorldScene : Node2D
 
     private void UpdatePlaytimeAmountLabel()
     {
-        _playtimeAmountLabel.Text = $"{DateTime.Now - _startTime:mm:ss.fff}";
+        _playtimeAmountLabel.Text = $"{DateTime.Now - _startTime:mm\\:ss\\.fff}";
     }
 
     private void ReloadDataFromStorage()
