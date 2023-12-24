@@ -11,7 +11,7 @@ public partial class UpgradableSection : Node2D
 	private const int CycleDelay = 5;
 
 	private Button _upgradeButton;
-	private Sprite2D _upgradeIcon;
+	private Sprite2D[] _upgradeIcons;
 	private ProgressBar _seedProgressBar;
 	private Label _itemNameLabel;
 	private Label _itemRateLabel;
@@ -66,8 +66,13 @@ public partial class UpgradableSection : Node2D
 		_upgradeButton = upgradePanel.GetNode<Button>("UpgradeButton");
 		_upgradeButton.Pressed += Upgrade;
 
-		_upgradeIcon = upgradePanel.GetNode<Sprite2D>("UpgradeIcon");
-		_upgradeIcon.Visible = false;
+		_upgradeIcons = new[]
+		{
+			upgradePanel.GetNode<Sprite2D>("UpgradeIcon"),
+			upgradePanel.GetNode<Sprite2D>("UpgradeIcon2")
+		};
+
+		SetUpgradeIconVisibility(visible: false);
 
 		_seedProgressBar = GetNode<ProgressBar>("SeedProgressBar");
 		_itemNameLabel = GetNode<Label>("ItemNameLabel");
@@ -79,6 +84,15 @@ public partial class UpgradableSection : Node2D
 		_progressJob ??= Task.Run(ProgressCycle);
 
 		NotifyStateChanged();
+	}
+
+	private void SetUpgradeIconVisibility(bool visible)
+	{
+		foreach (var upgradeIcon in _upgradeIcons)
+		{
+			upgradeIcon.Visible = visible;
+
+		}
 	}
 
 	private async Task ProgressCycle()
@@ -111,7 +125,7 @@ public partial class UpgradableSection : Node2D
 			PointCreated?.Invoke(this, (int)SeedType);
 		}
 
-		_upgradeIcon.Visible = CanPurchaseMultiplier();
+		SetUpgradeIconVisibility(CanPurchaseMultiplier());
 	}
 
 	private void BuyMultiplier()

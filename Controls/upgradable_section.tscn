@@ -58,7 +58,12 @@ layout_mode = 2
 text = "1000x"
 
 [node name="UpgradeIcon" type="Sprite2D" parent="UpgradePanel"]
-position = Vector2(102, 24)
+position = Vector2(104, 24)
+scale = Vector2(0.0706278, 0.0695067)
+texture = ExtResource("2_dx2bl")
+
+[node name="UpgradeIcon2" type="Sprite2D" parent="UpgradePanel"]
+position = Vector2(16, 24)
 scale = Vector2(0.0706278, 0.0695067)
 texture = ExtResource("2_dx2bl")
 
