@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://c05vugpubsxb1" path="res://Assets/seeds.png" id="3_0pcdk"]
 
 [node name="UpgradableSection" type="Node2D"]
+position = Vector2(32, 0)
 script = ExtResource("1_qcfjl")
 
 [node name="SeedProgressBar" type="ProgressBar" parent="."]
