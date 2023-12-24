@@ -29,9 +29,7 @@ public partial class WorldScene : Node2D
 	private DateTime _startTime;
 
 	private CancellationTokenSource _cyclerJobsCts;
-	private Task _pointRenderCycler;
 	private Task _dataSaverCycler;
-	private Task _playtimeAmountRenderCycler;
 
 	private int GetSeedCost(Seed seed) => (int)seed * SeedCosts.Multiplier;
 
@@ -73,8 +71,6 @@ public partial class WorldScene : Node2D
 		UpdateBuyButton(PeekNextSeed(out _));
 
 		ResetCyclerToken();
-		_playtimeAmountRenderCycler ??= Task.Run(() => PlaytimeAmountRenderCyclerJob(_cyclerJobsCts.Token));
-		_pointRenderCycler ??= Task.Run(() => PointRenderCyclerJob(_cyclerJobsCts.Token));
 		_dataSaverCycler ??= Task.Run(() => DataSaverCyclerJob(_cyclerJobsCts.Token));
 	}
 
@@ -139,32 +135,6 @@ public partial class WorldScene : Node2D
 	{
 		ResetCyclerToken();
 		GetTree().ChangeSceneToFile(Scenes.MainMenu);
-	}
-
-	private async Task PlaytimeAmountRenderCyclerJob(CancellationToken token)
-	{
-		GD.Print($"{nameof(PlaytimeAmountRenderCyclerJob)} started!");
-
-		try
-		{
-			while (!token.IsCancellationRequested)
-			{
-				if (_playtimeAmountLabel is not null)
-				{
-					CallThreadSafe(nameof(UpdatePlaytimeAmountLabel));
-				}
-
-				await Task.Delay(PlaytimeAmountRenderCyclerDelayMs, token);
-			}
-		}
-		catch (TaskCanceledException)
-		{
-		}
-	}
-
-	private void UpdatePlaytimeAmountLabel()
-	{
-		_playtimeAmountLabel.Text = $"{DateTime.Now - _startTime:hh\\:mm\\:ss\\.fff}";
 	}
 
 	private void ReloadDataFromStorage()
@@ -259,27 +229,6 @@ public partial class WorldScene : Node2D
 		_shopButton.Text = $"Buy {seed} ({(int)seed}/cycle){System.Environment.NewLine}Costs {(int)seed * SeedCosts.Multiplier} seeds)";
 	}
 
-	private async Task PointRenderCyclerJob(CancellationToken token)
-	{
-		GD.Print($"{nameof(PointRenderCyclerJob)} started!");
-
-		try
-		{
-			while (!token.IsCancellationRequested)
-			{
-				if (_pointsLabel is not null)
-				{
-					CallThreadSafe(nameof(UpdatePointsLabel));
-				}
-
-				await Task.Delay(PointRenderCyclerDelayMs, token);
-			}
-		}
-		catch (TaskCanceledException)
-		{
-		}
-	}
-
 	private async Task DataSaverCyclerJob(CancellationToken token)
 	{
 		GD.Print($"{nameof(DataSaverCyclerJob)} started!");
@@ -328,14 +277,11 @@ public partial class WorldScene : Node2D
 		DataStorage.Write(data);
 	}
 
-	private void UpdatePointsLabel()
-	{
-		_pointsLabel.Text = $"{Points} seeds";
-	}
-
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		_pointsLabel.Text = $"{Points} seeds";
+		_playtimeAmountLabel.Text = $"{DateTime.Now - _startTime:hh\\:mm\\:ss\\.fff}";
 	}
 
 	private void HandleNewUpgrade()

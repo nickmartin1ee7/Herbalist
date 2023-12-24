@@ -8,9 +8,10 @@ public partial class UpgradableSection : Node2D
 	// 100ms = 10 iterations in 1 second
 	// 10ms = 100 iterations in 1 second
 	// 1ms = 1000 iterations in 1 second
-	private const int ProgressCycleDelay = 5;
+	private const int CycleDelay = 5;
 
 	private Button _upgradeButton;
+	private Sprite2D _upgradeIcon;
 	private ProgressBar _seedProgressBar;
 	private Label _itemNameLabel;
 	private Label _itemRateLabel;
@@ -61,8 +62,12 @@ public partial class UpgradableSection : Node2D
 
 	public override void _Ready()
 	{
-		_upgradeButton = GetNode<PanelContainer>("UpgradePanel").GetNode<Button>("UpgradeButton");
+		var upgradePanel = GetNode<PanelContainer>("UpgradePanel");
+		_upgradeButton = upgradePanel.GetNode<Button>("UpgradeButton");
 		_upgradeButton.Pressed += Upgrade;
+
+		_upgradeIcon = upgradePanel.GetNode<Sprite2D>("UpgradeIcon");
+		_upgradeIcon.Visible = false;
 
 		_seedProgressBar = GetNode<ProgressBar>("SeedProgressBar");
 		_itemNameLabel = GetNode<Label>("ItemNameLabel");
@@ -90,7 +95,7 @@ public partial class UpgradableSection : Node2D
 
 			CallThreadSafe(nameof(SetProgressBarValue), newProgress);
 
-			await Task.Delay(ProgressCycleDelay);
+			await Task.Delay(CycleDelay);
 		}
 	}
 
@@ -105,6 +110,8 @@ public partial class UpgradableSection : Node2D
 			_seedProgressBar.Value = 0d;
 			PointCreated?.Invoke(this, (int)SeedType);
 		}
+
+		_upgradeIcon.Visible = CanPurchaseMultiplier();
 	}
 
 	private void BuyMultiplier()
