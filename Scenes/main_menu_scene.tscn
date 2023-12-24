@@ -41,3 +41,6 @@ custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 theme = ExtResource("3_85jj5")
 text = "Restart"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(540, 1200)
