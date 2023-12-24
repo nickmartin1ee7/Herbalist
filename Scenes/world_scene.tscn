@@ -1,8 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://ci4b5mgekpaev"]
+[gd_scene load_steps=13 format=3 uid="uid://ci4b5mgekpaev"]
 
 [ext_resource type="Script" path="res://Scenes/WorldScene.cs" id="1_7ydjs"]
 [ext_resource type="Texture2D" uid="uid://dwjvfyf1rir43" path="res://Assets/world_scene_background_tall.jpg" id="2_0ubxp"]
-[ext_resource type="PackedScene" uid="uid://bxdiplngukc8m" path="res://Controls/upgradable_section.tscn" id="4_n8qwc"]
 [ext_resource type="PackedScene" uid="uid://dikrov6ek60gx" path="res://Controls/overview_section.tscn" id="4_o57fr"]
 [ext_resource type="Texture2D" uid="uid://c7qiormipeqhl" path="res://Assets/wooden_border_short.png" id="4_xi2fs"]
 [ext_resource type="Texture2D" uid="uid://blnhdlv12sgwi" path="res://Assets/wooden_border.png" id="5_gcb1b"]
@@ -50,36 +49,6 @@ metadata/_edit_lock_ = true
 [node name="FlowersVBoxContainer" type="VBoxContainer" parent="FlowersScrollContainer"]
 layout_mode = 2
 metadata/_edit_lock_ = true
-
-[node name="UpgradableSection" parent="FlowersScrollContainer/FlowersVBoxContainer" instance=ExtResource("4_n8qwc")]
-visible = false
-position = Vector2(32, 0)
-scale = Vector2(2.575, 2.575)
-
-[node name="UpgradableSection2" parent="FlowersScrollContainer/FlowersVBoxContainer" instance=ExtResource("4_n8qwc")]
-visible = false
-position = Vector2(32, 280)
-scale = Vector2(2.575, 2.575)
-
-[node name="UpgradableSection3" parent="FlowersScrollContainer/FlowersVBoxContainer" instance=ExtResource("4_n8qwc")]
-visible = false
-position = Vector2(32, 560)
-scale = Vector2(2.575, 2.575)
-
-[node name="UpgradableSection4" parent="FlowersScrollContainer/FlowersVBoxContainer" instance=ExtResource("4_n8qwc")]
-visible = false
-position = Vector2(32, 840)
-scale = Vector2(2.575, 2.575)
-
-[node name="UpgradableSection5" parent="FlowersScrollContainer/FlowersVBoxContainer" instance=ExtResource("4_n8qwc")]
-visible = false
-position = Vector2(32, 1112)
-scale = Vector2(2.575, 2.575)
-
-[node name="UpgradableSection6" parent="FlowersScrollContainer/FlowersVBoxContainer" instance=ExtResource("4_n8qwc")]
-visible = false
-position = Vector2(32, 1392)
-scale = Vector2(2.575, 2.575)
 
 [node name="FlowerHBoxContainer" type="HBoxContainer" parent="."]
 offset_left = 88.0
