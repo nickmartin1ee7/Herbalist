@@ -94,11 +94,10 @@ metadata/_edit_lock_ = true
 
 [node name="FooterHBoxContainer" type="HBoxContainer" parent="."]
 offset_left = 88.0
-offset_top = 2248.0
+offset_top = 2216.0
 offset_right = 1008.0
 offset_bottom = 2344.0
 alignment = 1
-metadata/_edit_lock_ = true
 
 [node name="MainMenuButton" type="Button" parent="FooterHBoxContainer"]
 layout_mode = 2

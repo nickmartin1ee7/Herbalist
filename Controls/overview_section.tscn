@@ -8,9 +8,9 @@ scale = Vector2(0.25, 0.25)
 script = ExtResource("1_8jiob")
 
 [node name="SeedsLabel" type="Label" parent="."]
-offset_left = 896.0
+offset_left = 1024.0
 offset_top = 64.0
-offset_right = 3648.0
+offset_right = 3424.0
 offset_bottom = 447.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 280
@@ -19,10 +19,16 @@ horizontal_alignment = 1
 vertical_alignment = 1
 text_overrun_behavior = 3
 
-[node name="SeedIcon" type="Sprite2D" parent="."]
-position = Vector2(3904, 256)
-scale = Vector2(1.79705, 1.79705)
-texture = ExtResource("2_1lt25")
+[node name="ForageButton" type="Button" parent="."]
+offset_left = 3456.0
+offset_right = 4096.0
+offset_bottom = 557.0
+theme_override_font_sizes/font_size = 100
+text = "Forage"
+icon = ExtResource("2_1lt25")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 offset_right = 896.0
