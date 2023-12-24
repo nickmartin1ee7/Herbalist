@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://ci4b5mgekpaev"]
+[gd_scene load_steps=14 format=3 uid="uid://ci4b5mgekpaev"]
 
 [ext_resource type="Script" path="res://Scenes/WorldScene.cs" id="1_7ydjs"]
 [ext_resource type="Texture2D" uid="uid://dwjvfyf1rir43" path="res://Assets/world_scene_background_tall.jpg" id="2_0ubxp"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://bnnfuoklwqsba" path="res://Assets/Rose.png" id="10_pcktm"]
 [ext_resource type="Texture2D" uid="uid://clrhem7lvnqwm" path="res://Assets/Iris.png" id="11_4k8rx"]
 [ext_resource type="Texture2D" uid="uid://cvmrv6apgwp1y" path="res://Assets/Daisy.png" id="12_1arwj"]
+[ext_resource type="Theme" uid="uid://h1j4sh4816pq" path="res://Themes/MenuButtonTheme.tres" id="13_uxe50"]
 
 [node name="WorldScene" type="Node2D"]
 script = ExtResource("1_7ydjs")
@@ -121,3 +122,25 @@ position = Vector2(852, 104)
 scale = Vector2(0.262048, 0.262048)
 texture = ExtResource("12_1arwj")
 metadata/_edit_lock_ = true
+
+[node name="FooterHBoxContainer" type="HBoxContainer" parent="."]
+offset_left = 88.0
+offset_top = 2248.0
+offset_right = 1008.0
+offset_bottom = 2344.0
+alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="Main Menu" type="Button" parent="FooterHBoxContainer"]
+layout_mode = 2
+theme = ExtResource("13_uxe50")
+text = "Main Menu"
+
+[node name="Container" type="Container" parent="FooterHBoxContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+
+[node name="Shop" type="Button" parent="FooterHBoxContainer"]
+layout_mode = 2
+theme = ExtResource("13_uxe50")
+text = "Shop"

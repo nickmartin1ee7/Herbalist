@@ -4,4 +4,5 @@ public static class Scenes
 
     public const string MainMenu = $"{resPrefix}/main_menu_scene.tscn";
     public const string World = $"{resPrefix}/world_scene.tscn";
+    public const string Shop = $"{resPrefix}/shop_scene.tscn";
 }
