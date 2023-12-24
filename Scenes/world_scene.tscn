@@ -22,9 +22,8 @@ texture = ExtResource("2_0ubxp")
 metadata/_edit_lock_ = true
 
 [node name="OverviewSection" parent="." instance=ExtResource("4_o57fr")]
-position = Vector2(96, 144)
+position = Vector2(88, 120)
 scale = Vector2(0.22, 0.22)
-metadata/_edit_lock_ = true
 
 [node name="OverviewWoodenBorderShortIcon" type="Sprite2D" parent="."]
 position = Vector2(328, 187.873)

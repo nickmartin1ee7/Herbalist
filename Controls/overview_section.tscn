@@ -7,35 +7,13 @@
 scale = Vector2(0.25, 0.25)
 script = ExtResource("1_8jiob")
 
-[node name="SeedsLabel" type="Label" parent="."]
-offset_left = 1024.0
-offset_top = 64.0
-offset_right = 3424.0
-offset_bottom = 447.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 280
-text = "100,000,000,000"
-horizontal_alignment = 1
-vertical_alignment = 1
-text_overrun_behavior = 3
-
-[node name="ForageButton" type="Button" parent="."]
-offset_left = 3456.0
-offset_right = 4096.0
-offset_bottom = 557.0
-theme_override_font_sizes/font_size = 100
-text = "Forage"
-icon = ExtResource("2_1lt25")
-icon_alignment = 1
-vertical_icon_alignment = 0
-expand_icon = true
-
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-offset_right = 896.0
-offset_bottom = 480.0
+offset_right = 909.0
+offset_bottom = 640.0
 
 [node name="PlaytimeLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 152
 text = "Playtime"
@@ -44,8 +22,39 @@ vertical_alignment = 1
 
 [node name="PlaytimeAmountLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 152
 text = "00:12:34.000"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+offset_left = 1120.0
+offset_right = 4096.0
+offset_bottom = 640.0
+
+[node name="SeedsLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 280
+text = "100,000,000,000"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="Container" type="Container" parent="HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="ForageButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.3
+theme_override_font_sizes/font_size = 100
+text = "Forage"
+icon = ExtResource("2_1lt25")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
