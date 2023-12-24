@@ -137,7 +137,7 @@ theme = ExtResource("13_uxe50")
 text = "Main Menu"
 
 [node name="Container" type="Container" parent="FooterHBoxContainer"]
-custom_minimum_size = Vector2(250, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
 [node name="ShopButton" type="Button" parent="FooterHBoxContainer"]

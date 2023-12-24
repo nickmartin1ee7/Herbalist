@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
+using Godot;
+
 public partial class WorldScene : Node2D
 {
     private const float SectionHeight = 120; // Height of each Section
