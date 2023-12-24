@@ -80,5 +80,3 @@ vertical_alignment = 1
 position = Vector2(80, 16)
 scale = Vector2(0.09, 0.09)
 texture = ExtResource("3_0pcdk")
-
-[connection signal="pressed" from="UpgradePanel/UpgradeButton" to="." method="_on_button_pressed"]
