@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Godot;
@@ -25,10 +26,12 @@ public partial class WorldScene : Node2D
     private Button _mainMenuButton;
     private Button _shopButton;
     private int _lastSeedIndex;
+    private DateTime _startTime;
+
+    private CancellationTokenSource _cyclerJobsCts;
     private Task _pointRenderCycler;
     private Task _dataSaverCycler;
     private Task _playtimeAmountRenderCycler;
-    private DateTime _startTime;
 
     private int GetSeedCost(Seed seed) => (int)seed * SeedCosts.Multiplier;
 
@@ -69,9 +72,16 @@ public partial class WorldScene : Node2D
 
         UpdateBuyButton(PeekNextSeed(out _));
 
-        _playtimeAmountRenderCycler ??= Task.Run(PlaytimeAmountRenderCyclerJob);
-        _pointRenderCycler ??= Task.Run(PointRenderCyclerJob);
-        _dataSaverCycler ??= Task.Run(DataSaverCyclerJob);
+        ResetCyclerToken();
+        _playtimeAmountRenderCycler ??= Task.Run(() => PlaytimeAmountRenderCyclerJob(_cyclerJobsCts.Token));
+        _pointRenderCycler ??= Task.Run(() => PointRenderCyclerJob(_cyclerJobsCts.Token));
+        _dataSaverCycler ??= Task.Run(() => DataSaverCyclerJob(_cyclerJobsCts.Token));
+    }
+
+    private void ResetCyclerToken()
+    {
+        _cyclerJobsCts?.Cancel();
+        _cyclerJobsCts = new();
     }
 
     private void ForageSeed()
@@ -127,21 +137,28 @@ public partial class WorldScene : Node2D
 
     private void NavigateToMainMenu()
     {
+        ResetCyclerToken();
         GetTree().ChangeSceneToFile(Scenes.MainMenu);
     }
 
-    private async Task PlaytimeAmountRenderCyclerJob()
+    private async Task PlaytimeAmountRenderCyclerJob(CancellationToken token)
     {
         GD.Print($"{nameof(PlaytimeAmountRenderCyclerJob)} started!");
 
-        while (true)
+        try
         {
-            if (_playtimeAmountLabel is not null)
+            while (!token.IsCancellationRequested)
             {
-                CallThreadSafe(nameof(UpdatePlaytimeAmountLabel));
-            }
+                if (_playtimeAmountLabel is not null)
+                {
+                    CallThreadSafe(nameof(UpdatePlaytimeAmountLabel));
+                }
 
-            await Task.Delay(PlaytimeAmountRenderCyclerDelayMs);
+                await Task.Delay(PlaytimeAmountRenderCyclerDelayMs, token);
+            }
+        }
+        catch (TaskCanceledException)
+        {
         }
     }
 
@@ -242,39 +259,51 @@ public partial class WorldScene : Node2D
         _shopButton.Text = $"Buy {seed} ({(int)seed}/cycle){System.Environment.NewLine}Costs {(int)seed * SeedCosts.Multiplier} seeds)";
     }
 
-    private async Task PointRenderCyclerJob()
+    private async Task PointRenderCyclerJob(CancellationToken token)
     {
         GD.Print($"{nameof(PointRenderCyclerJob)} started!");
 
-        while (true)
+        try
         {
-            if (_pointsLabel is not null)
+            while (!token.IsCancellationRequested)
             {
-                CallThreadSafe(nameof(UpdatePointsLabel));
-            }
+                if (_pointsLabel is not null)
+                {
+                    CallThreadSafe(nameof(UpdatePointsLabel));
+                }
 
-            await Task.Delay(PointRenderCyclerDelayMs);
+                await Task.Delay(PointRenderCyclerDelayMs, token);
+            }
+        }
+        catch (TaskCanceledException)
+        {
         }
     }
 
-    private async Task DataSaverCyclerJob()
+    private async Task DataSaverCyclerJob(CancellationToken token)
     {
         GD.Print($"{nameof(DataSaverCyclerJob)} started!");
 
-        while (true)
+        try
         {
-            try
+            while (!token.IsCancellationRequested)
             {
-                TrySaveData();
-                GD.Print($"{nameof(DataSaverCyclerJob)} data saved!");
+                try
+                {
+                    TrySaveData();
+                    GD.Print($"{nameof(DataSaverCyclerJob)} data saved!");
 
-            }
-            catch (Exception ex)
-            {
-                GD.PrintErr($"{nameof(DataSaverCyclerJob)} failed to save data: {ex}", ex);
-            }
+                }
+                catch (Exception ex)
+                {
+                    GD.PrintErr($"{nameof(DataSaverCyclerJob)} failed to save data: {ex}", ex);
+                }
 
-            await Task.Delay(DataSaverCyclerDelayMs);
+                await Task.Delay(DataSaverCyclerDelayMs, token);
+            }
+        }
+        catch (TaskCanceledException)
+        {
         }
     }
 
