@@ -7,29 +7,6 @@
 scale = Vector2(0.25, 0.25)
 script = ExtResource("1_8jiob")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
-offset_right = 896.0
-offset_bottom = 480.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
-layout_mode = 2
-
-[node name="PlaytimeLabel" type="Label" parent="PanelContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 152
-text = "Playtime"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="PlaytimeAmountLabel" type="Label" parent="PanelContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 152
-text = "12:34.000"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="SeedsLabel" type="Label" parent="."]
 offset_left = 896.0
 offset_top = 64.0
@@ -46,3 +23,23 @@ text_overrun_behavior = 3
 position = Vector2(3904, 256)
 scale = Vector2(1.79705, 1.79705)
 texture = ExtResource("2_1lt25")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_right = 896.0
+offset_bottom = 480.0
+
+[node name="PlaytimeLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 152
+text = "Playtime"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlaytimeAmountLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 152
+text = "12:34.000"
+horizontal_alignment = 1
+vertical_alignment = 1
