@@ -81,43 +81,43 @@ position = Vector2(32, 1392)
 scale = Vector2(2.575, 2.575)
 
 [node name="FlowerHBoxContainer" type="HBoxContainer" parent="."]
-offset_left = 149.0
+offset_left = 88.0
 offset_top = 1976.0
-offset_right = 1069.0
+offset_right = 1008.0
 offset_bottom = 2192.0
 metadata/_edit_lock_ = true
 
 [node name="Grass" type="Sprite2D" parent="FlowerHBoxContainer"]
-position = Vector2(51, 136)
+position = Vector2(116, 136)
 texture = ExtResource("8_n2ath")
 metadata/_edit_lock_ = true
 
 [node name="Marigold" type="Sprite2D" parent="FlowerHBoxContainer"]
-position = Vector2(219, 104)
+position = Vector2(284, 104)
 scale = Vector2(0.521429, 0.521429)
 texture = ExtResource("7_3xxrr")
 metadata/_edit_lock_ = true
 
 [node name="Sunflower" type="Sprite2D" parent="FlowerHBoxContainer"]
-position = Vector2(363, 112)
+position = Vector2(428, 112)
 scale = Vector2(0.265517, 0.265517)
 texture = ExtResource("9_od7np")
 metadata/_edit_lock_ = true
 
 [node name="Rose" type="Sprite2D" parent="FlowerHBoxContainer"]
-position = Vector2(523, 112)
+position = Vector2(588, 112)
 scale = Vector2(0.467949, 0.467949)
 texture = ExtResource("10_pcktm")
 metadata/_edit_lock_ = true
 
 [node name="Iris" type="Sprite2D" parent="FlowerHBoxContainer"]
-position = Vector2(659, 112)
+position = Vector2(724, 112)
 scale = Vector2(0.434143, 0.434143)
 texture = ExtResource("11_4k8rx")
 metadata/_edit_lock_ = true
 
 [node name="Daisy" type="Sprite2D" parent="FlowerHBoxContainer"]
-position = Vector2(787, 104)
+position = Vector2(852, 104)
 scale = Vector2(0.262048, 0.262048)
 texture = ExtResource("12_1arwj")
 metadata/_edit_lock_ = true
