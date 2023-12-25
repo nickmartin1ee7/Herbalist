@@ -159,17 +159,17 @@ public partial class UpgradableSection : Node2D
 
 		if (_itemRateLabel is not null)
 		{
-			_itemRateLabel.Text = $"{(int)SeedType}";
+			_itemRateLabel.Text = $"{(int)SeedType:N}";
 		}
 
 		if (_upgradeButton is not null)
 		{
-			_upgradeButton.Text = $"x{Multiplier}";
+			_upgradeButton.Text = $"x{Multiplier:N}";
 		}
 
 		if (_seedCostLabel is not null)
 		{
-			_seedCostLabel.Text = $"{UpgradeCost}";
+			_seedCostLabel.Text = $"{UpgradeCost:N}";
 		}
 	}
 }

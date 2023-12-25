@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Godot;
+
 public partial class WorldScene : Node2D
 {
 	private const float SectionHeight = 120; // Height of each Section
@@ -280,7 +281,7 @@ public partial class WorldScene : Node2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		_pointsLabel.Text = $"{Points} seeds";
+		_pointsLabel.Text = $"{Points:N} seeds";
 		_playtimeAmountLabel.Text = $"{DateTime.Now - _startTime:hh\\:mm\\:ss\\.fff}";
 	}
 

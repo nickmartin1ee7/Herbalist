@@ -32,6 +32,7 @@ theme_override_font_sizes/font_size = 12
 text = "1"
 horizontal_alignment = 1
 vertical_alignment = 1
+text_overrun_behavior = 3
 
 [node name="ItemRateLabel2" type="Label" parent="."]
 offset_left = 268.0
@@ -56,6 +57,7 @@ offset_bottom = 48.0
 [node name="UpgradeButton" type="Button" parent="UpgradePanel"]
 layout_mode = 2
 text = "1000x"
+text_overrun_behavior = 3
 
 [node name="UpgradeIcon" type="Sprite2D" parent="UpgradePanel"]
 position = Vector2(104, 24)
@@ -81,6 +83,7 @@ offset_bottom = 32.0
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
+text_overrun_behavior = 3
 
 [node name="SeedIcon" type="Sprite2D" parent="SeedCostPanel"]
 position = Vector2(80, 16)
