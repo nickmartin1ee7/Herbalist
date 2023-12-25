@@ -13,6 +13,7 @@ offset_left = 128.0
 offset_top = 48.0
 offset_right = 320.0
 offset_bottom = 80.0
+mouse_filter = 1
 
 [node name="ItemNameLabel" type="Label" parent="."]
 offset_left = 128.0
@@ -56,6 +57,7 @@ offset_bottom = 48.0
 
 [node name="UpgradeButton" type="Button" parent="UpgradePanel"]
 layout_mode = 2
+mouse_filter = 1
 text = "1000x"
 text_overrun_behavior = 3
 
@@ -74,6 +76,7 @@ offset_left = 8.0
 offset_top = 48.0
 offset_right = 112.0
 offset_bottom = 80.0
+mouse_filter = 1
 
 [node name="SeedCostLabel" type="Label" parent="SeedCostPanel"]
 layout_mode = 0
