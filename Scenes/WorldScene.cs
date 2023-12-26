@@ -241,8 +241,6 @@ public partial class WorldScene : Node2D
 				try
 				{
 					TrySaveData();
-					GD.Print($"{nameof(DataSaverCyclerJob)} data saved!");
-
 				}
 				catch (Exception ex)
 				{

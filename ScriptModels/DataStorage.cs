@@ -20,9 +20,6 @@ public static class DataStorage
     public static void Write(Dictionary<string, string> data)
     {
         var dataStr = JsonSerializer.Serialize(data);
-
-        GD.Print($"{nameof(DataStorage)} {nameof(Write)} wrote {data.Count} values to {DataFile.FullName}. {dataStr}");
-
         File.WriteAllText(DataFile.FullName, dataStr);
     }
 
@@ -44,9 +41,6 @@ public static class DataStorage
             }
 
             var data = JsonSerializer.Deserialize<Dictionary<string, string>>(content);
-
-            GD.Print($"{nameof(DataStorage)} {nameof(Read)} read {data.Count} values from {DataFile.FullName}. {content}");
-
             return data;
         }
         catch (Exception ex)

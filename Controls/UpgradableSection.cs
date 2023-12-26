@@ -20,6 +20,10 @@ public partial class UpgradableSection : Node2D
 	private Seed _seed;
 	private int _multiplier = 1;
 	private Task _progressJob;
+	bool _isUpgradeButtonDown = false;
+	DateTime? _upgradeButtonDownTime = null;
+
+	private readonly TimeSpan OneSecondTimeSpan = TimeSpan.FromSeconds(1);
 
 	public Seed SeedType
 	{
@@ -50,6 +54,7 @@ public partial class UpgradableSection : Node2D
 			NotifyStateChanged();
 		}
 	}
+
 	public int Rate => (int)SeedType * Multiplier;
 
 	public const string ResourcePath = "res://Controls/upgradable_section.tscn";
@@ -65,6 +70,18 @@ public partial class UpgradableSection : Node2D
 		var upgradePanel = GetNode<PanelContainer>("UpgradePanel");
 		_upgradeButton = upgradePanel.GetNode<Button>("UpgradeButton");
 		_upgradeButton.Pressed += Upgrade;
+		_upgradeButton.ButtonDown += () =>
+		{
+			_isUpgradeButtonDown = true;
+			_upgradeButtonDownTime = DateTime.Now;
+		};
+
+		_upgradeButton.ButtonUp += () =>
+		{
+			_isUpgradeButtonDown = false;
+			_upgradeButtonDownTime = null;
+		};
+
 
 		_upgradeIcons = new[]
 		{
@@ -85,6 +102,28 @@ public partial class UpgradableSection : Node2D
 
 		NotifyStateChanged();
 	}
+
+	// Called every frame. 'delta' is the elapsed time since the previous frame.
+	public override void _Process(double delta)
+	{
+		if (_isUpgradeButtonDown && _upgradeButtonDownTime.HasValue)
+		{
+			var timeHeld = (DateTime.Now - _upgradeButtonDownTime.Value);
+			if (timeHeld > OneSecondTimeSpan)
+			{
+				Upgrade();
+			}
+		}
+
+		if (_seedProgressBar.Value == 100d)
+		{
+			_seedProgressBar.Value = 0d;
+			PointCreated?.Invoke(this, (int)SeedType);
+		}
+
+		SetUpgradeIconVisibility(CanPurchaseMultiplier());
+	}
+
 
 	private void SetUpgradeIconVisibility(bool visible)
 	{
@@ -115,18 +154,6 @@ public partial class UpgradableSection : Node2D
 
 	private void SetProgressBarValue(double value) =>
 		_seedProgressBar.Value = value;
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-		if (_seedProgressBar.Value == 100d)
-		{
-			_seedProgressBar.Value = 0d;
-			PointCreated?.Invoke(this, (int)SeedType);
-		}
-
-		SetUpgradeIconVisibility(CanPurchaseMultiplier());
-	}
 
 	private void BuyMultiplier()
 	{
