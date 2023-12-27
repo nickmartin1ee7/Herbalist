@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dikrov6ek60gx"]
 
 [ext_resource type="Script" path="res://Controls/OverviewSection.cs" id="1_8jiob"]
-[ext_resource type="Texture2D" uid="uid://c05vugpubsxb1" path="res://Assets/Seeds.png" id="2_1lt25"]
+[ext_resource type="Texture2D" uid="uid://c05vugpubsxb1" path="res://Assets/Seeds.png" id="2_6ti2j"]
 
 [node name="OverviewSection" type="Node2D"]
 scale = Vector2(0.25, 0.25)
@@ -54,7 +54,7 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.3
 theme_override_font_sizes/font_size = 100
 text = "Forage"
-icon = ExtResource("2_1lt25")
+icon = ExtResource("2_6ti2j")
 icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true

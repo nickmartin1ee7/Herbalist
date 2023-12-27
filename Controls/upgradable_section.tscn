@@ -25,6 +25,7 @@ offset_bottom = 80.0
 metadata/_edit_lock_ = true
 
 [node name="MaxedOutLabel" type="Label" parent="MaxedOutPanel"]
+layout_mode = 0
 offset_right = 192.0
 offset_bottom = 32.0
 text = "🌟Maxed Out🌟"
