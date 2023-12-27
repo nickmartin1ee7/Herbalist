@@ -13,6 +13,7 @@ public partial class UpgradableSection : Node2D
 	private Button _upgradeButton;
 	private Sprite2D[] _upgradeIcons;
 	private ProgressBar _seedProgressBar;
+	private TextureProgressBar _seedProgressBar2;
 	private Label _itemNameLabel;
 	private Label _itemRateLabel;
 	private Label _seedCostLabel;
@@ -32,6 +33,12 @@ public partial class UpgradableSection : Node2D
 
 	private double MaxMultiplier
 		=> MultiplierProgressionFactor * _seedProgressBar.MaxValue;
+
+	private double ProgressBarCutOffMultiplier
+		=> MaxMultiplier * .5;
+
+	private bool IsMultiplierOverCutOff
+		=> Multiplier >= ProgressBarCutOffMultiplier;
 
 	public Seed SeedType
 	{
@@ -63,7 +70,8 @@ public partial class UpgradableSection : Node2D
 		}
 	}
 
-	public int Rate => (int)SeedType * Multiplier;
+	public int Rate
+		=> (int)SeedType * Multiplier;
 
 	public const string ResourcePath = "res://Controls/upgradable_section.tscn";
 
@@ -99,6 +107,7 @@ public partial class UpgradableSection : Node2D
 		SetUpgradeIconVisibility(visible: false);
 
 		_seedProgressBar = GetNode<ProgressBar>("SeedProgressBar");
+		_seedProgressBar2 = GetNode<TextureProgressBar>("SeedProgressBar2");
 		_itemNameLabel = GetNode<Label>("ItemNameLabel");
 		_itemRateLabel = GetNode<Label>("ItemRateLabel");
 		_seedCostLabel = GetNode<Panel>("SeedCostPanel").GetNode<Label>("SeedCostLabel");
@@ -129,9 +138,12 @@ public partial class UpgradableSection : Node2D
 			if (Multiplier >= MaxMultiplier && !_maxedOutPanel.Visible)
 			{
 				_seedProgressBar.Visible = false;
+				_seedProgressBar2.Visible = false;
+
 				_maxedOutPanel.Visible = true;
 			}
 
+			_seedProgressBar2.Value = 0d;
 			_seedProgressBar.Value = 0d;
 			PointCreated?.Invoke(this, (int)SeedType);
 		}
@@ -168,8 +180,11 @@ public partial class UpgradableSection : Node2D
 		}
 	}
 
-	private void SetProgressBarValue(double value) =>
+	private void SetProgressBarValue(double value)
+	{
 		_seedProgressBar.Value = value;
+		_seedProgressBar2.Value = value;
+	}
 
 	private void BuyMultiplier()
 	{

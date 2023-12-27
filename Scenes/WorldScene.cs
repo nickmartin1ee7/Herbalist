@@ -91,7 +91,7 @@ public partial class WorldScene : Node2D
 		_flowerSprites = new();
 		var flowerBox = GetNode<HBoxContainer>("FlowerHBoxContainer");
 
-		foreach (var seed in Enum.GetValues<Seed>())
+		foreach (var seed in Enum.GetValues<Seed>().Skip(1))
 		{
 			var node = flowerBox.GetNode<Sprite2D>(seed.ToString());
 
