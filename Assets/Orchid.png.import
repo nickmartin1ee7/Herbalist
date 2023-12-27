@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c05vugpubsxb1"
-path="res://.godot/imported/Seeds.png-d0de7cc9158b45001c9ecd81336a53f8.ctex"
+uid="uid://dwltvssneu4ia"
+path="res://.godot/imported/Orchid.png-d615b96454d786d6763c1e0cd909b66c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Seeds.png"
-dest_files=["res://.godot/imported/Seeds.png-d0de7cc9158b45001c9ecd81336a53f8.ctex"]
+source_file="res://Assets/Orchid.png"
+dest_files=["res://.godot/imported/Orchid.png-d615b96454d786d6763c1e0cd909b66c.ctex"]
 
 [params]
 

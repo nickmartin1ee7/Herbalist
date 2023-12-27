@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c05vugpubsxb1"
-path="res://.godot/imported/Seeds.png-d0de7cc9158b45001c9ecd81336a53f8.ctex"
+uid="uid://dcli4gva8be4u"
+path="res://.godot/imported/Poppy.png-ed1aac4460b66c048204d800f1e9d47c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Seeds.png"
-dest_files=["res://.godot/imported/Seeds.png-d0de7cc9158b45001c9ecd81336a53f8.ctex"]
+source_file="res://Assets/Poppy.png"
+dest_files=["res://.godot/imported/Poppy.png-ed1aac4460b66c048204d800f1e9d47c.ctex"]
 
 [params]
 

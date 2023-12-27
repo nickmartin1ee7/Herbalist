@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dikrov6ek60gx"]
 
 [ext_resource type="Script" path="res://Controls/OverviewSection.cs" id="1_8jiob"]
-[ext_resource type="Texture2D" uid="uid://c05vugpubsxb1" path="res://Assets/seeds.png" id="2_1lt25"]
+[ext_resource type="Texture2D" uid="uid://c05vugpubsxb1" path="res://Assets/Seeds.png" id="2_1lt25"]
 
 [node name="OverviewSection" type="Node2D"]
 scale = Vector2(0.25, 0.25)

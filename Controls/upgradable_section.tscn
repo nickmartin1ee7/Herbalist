@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Controls/UpgradableSection.cs" id="1_qcfjl"]
 [ext_resource type="Texture2D" uid="uid://ccqtyu8wmaxqs" path="res://Assets/upgrade_arrow.png" id="2_dx2bl"]
-[ext_resource type="Texture2D" uid="uid://c05vugpubsxb1" path="res://Assets/seeds.png" id="3_0pcdk"]
+[ext_resource type="Texture2D" uid="uid://c05vugpubsxb1" path="res://Assets/Seeds.png" id="3_0pcdk"]
 
 [node name="UpgradableSection" type="Node2D"]
 position = Vector2(32, 0)

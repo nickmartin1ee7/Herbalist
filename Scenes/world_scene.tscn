@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://ci4b5mgekpaev"]
+[gd_scene load_steps=25 format=3 uid="uid://ci4b5mgekpaev"]
 
 [ext_resource type="Script" path="res://Scenes/WorldScene.cs" id="1_7ydjs"]
 [ext_resource type="Texture2D" uid="uid://dwjvfyf1rir43" path="res://Assets/world_scene_background_tall.jpg" id="2_0ubxp"]
@@ -6,12 +6,24 @@
 [ext_resource type="Texture2D" uid="uid://c7qiormipeqhl" path="res://Assets/wooden_border_short.png" id="4_xi2fs"]
 [ext_resource type="Texture2D" uid="uid://blnhdlv12sgwi" path="res://Assets/wooden_border.png" id="5_gcb1b"]
 [ext_resource type="Texture2D" uid="uid://d4d0nsl5vxppi" path="res://Assets/marigold.png" id="7_3xxrr"]
-[ext_resource type="Texture2D" uid="uid://bx25gxqg0xn81" path="res://Assets/grass.png" id="8_n2ath"]
+[ext_resource type="Texture2D" uid="uid://bx25gxqg0xn81" path="res://Assets/Grass.png" id="8_n2ath"]
+[ext_resource type="Texture2D" uid="uid://b164k32ynlfb1" path="res://Assets/Tulip.png" id="9_lba3y"]
 [ext_resource type="Texture2D" uid="uid://dvft1m1iy7oky" path="res://Assets/Sunflower.png" id="9_od7np"]
 [ext_resource type="Texture2D" uid="uid://bnnfuoklwqsba" path="res://Assets/Rose.png" id="10_pcktm"]
 [ext_resource type="Texture2D" uid="uid://clrhem7lvnqwm" path="res://Assets/Iris.png" id="11_4k8rx"]
+[ext_resource type="Texture2D" uid="uid://dwltvssneu4ia" path="res://Assets/Orchid.png" id="11_md5q2"]
 [ext_resource type="Texture2D" uid="uid://cvmrv6apgwp1y" path="res://Assets/Daisy.png" id="12_1arwj"]
+[ext_resource type="Texture2D" uid="uid://cosbosu5bixf1" path="res://Assets/Peony.png" id="12_xs23v"]
 [ext_resource type="Theme" uid="uid://h1j4sh4816pq" path="res://Themes/MenuButtonTheme.tres" id="13_uxe50"]
+[ext_resource type="Texture2D" uid="uid://c41hefqu35mbk" path="res://Assets/Chrysanthemum.png" id="15_u7ph8"]
+[ext_resource type="Texture2D" uid="uid://dxg8hfdxy32gh" path="res://Assets/Poinsettia.png" id="16_sk0nr"]
+[ext_resource type="Texture2D" uid="uid://b77ivdfmfvn6r" path="res://Assets/Hydrangea.png" id="17_snbsn"]
+[ext_resource type="Texture2D" uid="uid://c3k5dcn0p2lja" path="res://Assets/Carnation.png" id="18_a5k12"]
+[ext_resource type="Texture2D" uid="uid://o5ln3qgjtdw1" path="res://Assets/Lavender.png" id="19_15ic3"]
+[ext_resource type="Texture2D" uid="uid://dcli4gva8be4u" path="res://Assets/Poppy.png" id="20_3w7o3"]
+[ext_resource type="Texture2D" uid="uid://bqgcwklub4drv" path="res://Assets/Daffodil.png" id="21_wujq1"]
+[ext_resource type="Texture2D" uid="uid://c05dt413boxav" path="res://Assets/Snapdragon.png" id="22_j0spv"]
+[ext_resource type="Texture2D" uid="uid://cnqggtj8ppvmp" path="res://Assets/Zinnia.png" id="23_lgegr"]
 
 [node name="WorldScene" type="Node2D"]
 script = ExtResource("1_7ydjs")
@@ -59,6 +71,7 @@ size_flags_vertical = 3
 metadata/_edit_lock_ = true
 
 [node name="FlowerHBoxContainer" type="HBoxContainer" parent="."]
+clip_contents = true
 offset_left = 88.0
 offset_top = 1976.0
 offset_right = 1008.0
@@ -66,38 +79,111 @@ offset_bottom = 2192.0
 metadata/_edit_lock_ = true
 
 [node name="Grass" type="Sprite2D" parent="FlowerHBoxContainer"]
-position = Vector2(116, 136)
+position = Vector2(472, 147)
+scale = Vector2(0.813869, 0.813869)
 texture = ExtResource("8_n2ath")
 metadata/_edit_lock_ = true
 
 [node name="Marigold" type="Sprite2D" parent="FlowerHBoxContainer"]
-position = Vector2(284, 104)
-scale = Vector2(0.521429, 0.521429)
+position = Vector2(737, 139)
+scale = Vector2(0.322322, 0.322322)
 texture = ExtResource("7_3xxrr")
 metadata/_edit_lock_ = true
 
 [node name="Sunflower" type="Sprite2D" parent="FlowerHBoxContainer"]
-position = Vector2(428, 112)
-scale = Vector2(0.265517, 0.265517)
+position = Vector2(197.75, 130.019)
+scale = Vector2(0.190517, 0.190517)
 texture = ExtResource("9_od7np")
 metadata/_edit_lock_ = true
 
+[node name="Tulip" type="Sprite2D" parent="FlowerHBoxContainer"]
+position = Vector2(883, 147)
+scale = Vector2(0.397369, 0.397369)
+texture = ExtResource("9_lba3y")
+metadata/_edit_lock_ = true
+
 [node name="Rose" type="Sprite2D" parent="FlowerHBoxContainer"]
-position = Vector2(588, 112)
-scale = Vector2(0.467949, 0.467949)
+position = Vector2(42.25, 133.947)
+scale = Vector2(0.344551, 0.344551)
 texture = ExtResource("10_pcktm")
 metadata/_edit_lock_ = true
 
+[node name="Orchid" type="Sprite2D" parent="FlowerHBoxContainer"]
+position = Vector2(309, 128)
+scale = Vector2(0.511905, 0.511905)
+texture = ExtResource("11_md5q2")
+metadata/_edit_lock_ = true
+
+[node name="Peony" type="Sprite2D" parent="FlowerHBoxContainer"]
+position = Vector2(791, 131)
+scale = Vector2(0.261129, 0.261129)
+texture = ExtResource("12_xs23v")
+metadata/_edit_lock_ = true
+
 [node name="Iris" type="Sprite2D" parent="FlowerHBoxContainer"]
-position = Vector2(724, 112)
-scale = Vector2(0.434143, 0.434143)
+position = Vector2(620, 132)
+scale = Vector2(0.355179, 0.355179)
 texture = ExtResource("11_4k8rx")
 metadata/_edit_lock_ = true
 
 [node name="Daisy" type="Sprite2D" parent="FlowerHBoxContainer"]
-position = Vector2(852, 104)
-scale = Vector2(0.262048, 0.262048)
+position = Vector2(109, 121)
+scale = Vector2(0.215361, 0.215361)
 texture = ExtResource("12_1arwj")
+metadata/_edit_lock_ = true
+
+[node name="Chrysanthemum" type="Sprite2D" parent="FlowerHBoxContainer"]
+position = Vector2(537, 124)
+scale = Vector2(0.335938, 0.335938)
+texture = ExtResource("15_u7ph8")
+metadata/_edit_lock_ = true
+
+[node name="Poinsettia" type="Sprite2D" parent="FlowerHBoxContainer"]
+position = Vector2(685, 131)
+scale = Vector2(0.636696, 0.636696)
+texture = ExtResource("16_sk0nr")
+metadata/_edit_lock_ = true
+
+[node name="Hydrangea" type="Sprite2D" parent="FlowerHBoxContainer"]
+position = Vector2(395, 127)
+scale = Vector2(0.273678, 0.273678)
+texture = ExtResource("17_snbsn")
+metadata/_edit_lock_ = true
+
+[node name="Carnation" type="Sprite2D" parent="FlowerHBoxContainer"]
+position = Vector2(236, 120)
+scale = Vector2(0.28729, 0.28729)
+texture = ExtResource("18_a5k12")
+metadata/_edit_lock_ = true
+
+[node name="Lavender" type="Sprite2D" parent="FlowerHBoxContainer"]
+position = Vector2(827, 149)
+scale = Vector2(0.245879, 0.245879)
+texture = ExtResource("19_15ic3")
+metadata/_edit_lock_ = true
+
+[node name="Poppy" type="Sprite2D" parent="FlowerHBoxContainer"]
+position = Vector2(77.4375, 129.135)
+scale = Vector2(0.352053, 0.352053)
+texture = ExtResource("20_3w7o3")
+metadata/_edit_lock_ = true
+
+[node name="Daffodil" type="Sprite2D" parent="FlowerHBoxContainer"]
+position = Vector2(142, 141)
+scale = Vector2(0.255396, 0.255395)
+texture = ExtResource("21_wujq1")
+metadata/_edit_lock_ = true
+
+[node name="Snapdragon" type="Sprite2D" parent="FlowerHBoxContainer"]
+position = Vector2(585, 125)
+scale = Vector2(0.211029, 0.211029)
+texture = ExtResource("22_j0spv")
+metadata/_edit_lock_ = true
+
+[node name="Zinnia" type="Sprite2D" parent="FlowerHBoxContainer"]
+position = Vector2(463, 118)
+scale = Vector2(0.370289, 0.370289)
+texture = ExtResource("23_lgegr")
 metadata/_edit_lock_ = true
 
 [node name="FooterHBoxContainer" type="HBoxContainer" parent="."]

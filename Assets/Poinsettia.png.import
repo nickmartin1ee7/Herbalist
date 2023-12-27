@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://o1qem5dnw46q"
-path="res://.godot/imported/world_icon.jpg-881b1a55ee80610b69ef1982aa8e092d.ctex"
+uid="uid://dxg8hfdxy32gh"
+path="res://.godot/imported/Poinsettia.png-5afbe987664ccb5f59279e9b63f2676c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/world_icon.jpg"
-dest_files=["res://.godot/imported/world_icon.jpg-881b1a55ee80610b69ef1982aa8e092d.ctex"]
+source_file="res://Assets/Poinsettia.png"
+dest_files=["res://.godot/imported/Poinsettia.png-5afbe987664ccb5f59279e9b63f2676c.ctex"]
 
 [params]
 
