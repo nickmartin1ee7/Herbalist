@@ -34,6 +34,7 @@ offset_left = 128.0
 offset_top = 48.0
 offset_right = 320.0
 offset_bottom = 80.0
+mouse_filter = 1
 metadata/_edit_lock_ = true
 
 [node name="MaxedOutLabel" type="Label" parent="MaxedOutPanel"]
