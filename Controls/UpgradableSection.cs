@@ -16,6 +16,7 @@ public partial class UpgradableSection : Node2D
 	private Label _itemNameLabel;
 	private Label _itemRateLabel;
 	private Label _seedCostLabel;
+	private Panel _maxedOutPanel;
 	private WorldScene _world;
 	private Seed _seed;
 	private int _multiplier = 1;
@@ -24,6 +25,13 @@ public partial class UpgradableSection : Node2D
 	DateTime? _upgradeButtonDownTime = null;
 
 	private readonly TimeSpan OneSecondTimeSpan = TimeSpan.FromSeconds(1);
+	private readonly double MultiplierProgressionFactor = 10d;
+
+	private double MultiplierProgressionRate
+		=> Multiplier / MultiplierProgressionFactor;
+
+	private double MaxMultiplier
+		=> MultiplierProgressionFactor * _seedProgressBar.MaxValue;
 
 	public Seed SeedType
 	{
@@ -64,7 +72,6 @@ public partial class UpgradableSection : Node2D
 		(int)SeedType * (int)(SeedCosts.Multiplier / 10d) * Multiplier;
 
 	// Called when the node enters the scene tree for the first time.
-
 	public override void _Ready()
 	{
 		var upgradePanel = GetNode<PanelContainer>("UpgradePanel");
@@ -96,6 +103,8 @@ public partial class UpgradableSection : Node2D
 		_itemRateLabel = GetNode<Label>("ItemRateLabel");
 		_seedCostLabel = GetNode<Panel>("SeedCostPanel").GetNode<Label>("SeedCostLabel");
 
+		_maxedOutPanel = GetNode<Panel>("MaxedOutPanel");
+
 		_world = GetParent().GetParent().GetParent().GetParent().GetNode<WorldScene>("WorldScene");
 
 		_progressJob ??= Task.Run(ProgressCycle);
@@ -117,6 +126,12 @@ public partial class UpgradableSection : Node2D
 
 		if (_seedProgressBar.Value == 100d)
 		{
+			if (Multiplier >= MaxMultiplier && !_maxedOutPanel.Visible)
+			{
+				_seedProgressBar.Visible = false;
+				_maxedOutPanel.Visible = true;
+			}
+
 			_seedProgressBar.Value = 0d;
 			PointCreated?.Invoke(this, (int)SeedType);
 		}
@@ -141,8 +156,9 @@ public partial class UpgradableSection : Node2D
 		while (true)
 		{
 			var progress = _seedProgressBar.Value;
+
 			// Ensure the progress value is within the valid range
-			var newProgress = Mathf.Clamp(progress + (double)Multiplier / 10,
+			var newProgress = Mathf.Clamp(progress + MultiplierProgressionRate,
 				_seedProgressBar.MinValue,
 				_seedProgressBar.MaxValue);
 
@@ -175,7 +191,7 @@ public partial class UpgradableSection : Node2D
 	}
 
 	private bool CanPurchaseMultiplier() =>
-		_world.Points >= UpgradeCost;
+		_world.Points >= UpgradeCost && Multiplier < MaxMultiplier;
 
 	private void NotifyStateChanged()
 	{
