@@ -28,6 +28,13 @@ window/handheld/orientation=1
 
 project/assembly_name="Herbalist"
 
+[input]
+
+shop_drag={
+"deadzone": 0.5,
+"events": []
+}
+
 [rendering]
 
 renderer/rendering_method="mobile"
