@@ -19,8 +19,6 @@ public partial class SwipeableControl : Control
     public override void _Ready()
     {
         _initialPos = Position;
-
-        // GD.Print($"GetViewportRect().Size = {GetViewportRect().Size}; GetParentAreaSize() = {GetParentAreaSize()}; GetParentControl().Position = {GetParentControl().Position}");
         _maxY = 0;
     }
 
@@ -60,18 +58,24 @@ public partial class SwipeableControl : Control
         if (@event is InputEventMouseMotion mouseMotionEvent
             && _dragging)
         {
-            const float DeadZone = 0.0f;
+            const float DeadZone = 5.0f;
 
             var yChange = Mathf.Round(mouseMotionEvent.Relative.Y);
             var newYPos = Position.Y + yChange;
             var lowEnough = newYPos > _maxY;
             var highEnough = newYPos < _initialPos.Y;
 
-            _snapState = yChange > DeadZone // Going down
+            // Deadzone filtering
+            if (Mathf.Abs(yChange) < DeadZone)
+            {
+                return;
+            }
+
+            _snapState = yChange > 0 // Going down
                 ? SnapState.SnappingToBottom
                 : SnapState.None;
 
-            _snapState = yChange < -DeadZone // Going up
+            _snapState = yChange < -0 // Going up
                 ? SnapState.SnappingToTop
                 : _snapState;
 

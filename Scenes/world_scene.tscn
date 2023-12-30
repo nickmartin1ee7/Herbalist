@@ -59,6 +59,7 @@ texture = ExtResource("5_gcb1b")
 metadata/_edit_lock_ = true
 
 [node name="CentralControl" type="Control" parent="."]
+clip_contents = true
 layout_mode = 3
 anchors_preset = 0
 offset_left = 80.0
@@ -260,7 +261,6 @@ layout_mode = 1
 metadata/_edit_lock_ = true
 
 [node name="FooterContainer" type="HBoxContainer" parent="."]
-visible = false
 offset_left = 88.0
 offset_top = 2216.0
 offset_right = 1008.0
