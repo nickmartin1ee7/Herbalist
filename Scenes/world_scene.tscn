@@ -188,6 +188,7 @@ texture = ExtResource("23_lgegr")
 metadata/_edit_lock_ = true
 
 [node name="FooterContainer" type="HBoxContainer" parent="."]
+visible = false
 offset_left = 88.0
 offset_top = 2216.0
 offset_right = 1008.0
@@ -210,10 +211,69 @@ theme = ExtResource("13_uxe50")
 text = "Shop"
 
 [node name="SwipeableControl" type="Control" parent="."]
+clip_contents = true
 layout_mode = 3
 anchors_preset = 0
-offset_left = -1268.0
-offset_top = 1310.0
-offset_right = -395.0
-offset_bottom = 1825.0
+offset_left = 96.0
+offset_top = 2248.0
+offset_right = 1000.0
+offset_bottom = 2755.0
 script = ExtResource("25_vri5b")
+
+[node name="Panel" type="Panel" parent="SwipeableControl"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="TopPanel" type="Panel" parent="SwipeableControl/Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 152.0
+grow_horizontal = 2
+mouse_filter = 1
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="SwipeableControl/Panel/TopPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 74
+text = "Shop"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="BottonPanel" type="Panel" parent="SwipeableControl/Panel"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -355.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 1
+metadata/_edit_lock_ = true
+
+[node name="Label2" type="Label" parent="SwipeableControl/Panel/BottonPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -120.0
+offset_bottom = -120.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 74
+text = "🤩🤩🤩🤩🤩"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
