@@ -59,7 +59,6 @@ texture = ExtResource("5_gcb1b")
 metadata/_edit_lock_ = true
 
 [node name="CentralControl" type="Control" parent="."]
-clip_contents = true
 layout_mode = 3
 anchors_preset = 0
 offset_left = 80.0
@@ -69,6 +68,7 @@ offset_bottom = 2336.0
 metadata/_edit_lock_ = true
 
 [node name="ScrollContainer" type="ScrollContainer" parent="CentralControl"]
+layout_mode = 0
 offset_left = 16.0
 offset_top = 24.0
 offset_right = 920.0
@@ -84,6 +84,7 @@ metadata/_edit_lock_ = true
 
 [node name="FlowerGardenContainer" type="HBoxContainer" parent="CentralControl"]
 clip_contents = true
+layout_mode = 0
 offset_left = 8.0
 offset_top = 1656.0
 offset_right = 928.0
