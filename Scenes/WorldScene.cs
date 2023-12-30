@@ -87,21 +87,21 @@ public partial class WorldScene : Node2D
             GetNode<Button>("ForageButton")
             ;
 
-        //var centralContainer =
-        //    GetNode<Container>("CentralContainer")
-        //    ;
+        var centralControl =
+            GetNode<Control>("CentralControl")
+            ;
 
         _upgradableSectionContainer =
-            //centralContainer
-            //.
+            centralControl
+            .
             GetNode<ScrollContainer>("ScrollContainer")
             .
             GetNode<VBoxContainer>("UpgradableSectionContainer")
             ;
 
         _flowerGardenContainer =
-            //centralContainer
-            //.
+            centralControl
+            .
             GetNode<HBoxContainer>("FlowerGardenContainer")
             ;
 
@@ -375,10 +375,7 @@ public partial class WorldScene : Node2D
     private void AppendNewSectionHeightToFlowerVBox()
     {
         var lastSectionY = _upgradableSectionContainer.GetChildCount() * (SectionHeight + SectionSpacing);
-
         _upgradableSectionContainer.CustomMinimumSize = new Vector2(_upgradableSectionContainer.Size.X, lastSectionY + SectionHeight);
-
-        GD.Print($"DEBUG: New flower vbox size: {_upgradableSectionContainer.Size}");
     }
 
     private void BuyAndShowUpgrade(Seed nextUpgrade, bool isFree = false)

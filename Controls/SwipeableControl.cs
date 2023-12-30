@@ -9,15 +9,19 @@ public partial class SwipeableControl : Control
         SnappingToBottom,
     }
 
-    private const float MaxY = 384f;
 
+    private float _maxY;
     private bool _dragging;
     private SnapState _snapState;
     private Vector2 _initialPos;
 
+
     public override void _Ready()
     {
         _initialPos = Position;
+
+        // GD.Print($"GetViewportRect().Size = {GetViewportRect().Size}; GetParentAreaSize() = {GetParentAreaSize()}; GetParentControl().Position = {GetParentControl().Position}");
+        _maxY = 0;
     }
 
     public override void _Input(InputEvent @event)
@@ -34,10 +38,10 @@ public partial class SwipeableControl : Control
                 // Snap to top
                 if (_snapState == SnapState.SnappingToTop)
                 {
-                    GD.Print($"Snap to toping... Position: {Position.Y} -> {MaxY}");
+                    GD.Print($"Snaping to top... Position: {Position.Y} -> {_maxY}");
                     Position = new Vector2(
                         Position.X,
-                        MaxY);
+                        _maxY);
                 }
                 // Snap to bottom
                 else if (_snapState == SnapState.SnappingToBottom)
@@ -60,7 +64,7 @@ public partial class SwipeableControl : Control
 
             var yChange = Mathf.Round(mouseMotionEvent.Relative.Y);
             var newYPos = Position.Y + yChange;
-            var lowEnough = newYPos > MaxY;
+            var lowEnough = newYPos > _maxY;
             var highEnough = newYPos < _initialPos.Y;
 
             _snapState = yChange > DeadZone // Going down
@@ -74,7 +78,7 @@ public partial class SwipeableControl : Control
             // Move if within bounds
             if (lowEnough && highEnough)
             {
-                GD.Print($"Moving: lowEnough = {lowEnough}. highEnough = {highEnough}. Position: {Position.Y} + {yChange} = {newYPos}. Snap State: {_snapState} _initialPos.Y = {_initialPos.Y}. MaxY = {MaxY}.");
+                GD.Print($"Moving: lowEnough = {lowEnough}. highEnough = {highEnough}. Position: {Position.Y} + {yChange} = {newYPos}. Snap State: {_snapState} _initialPos.Y = {_initialPos.Y}. MaxY = {_maxY}.");
 
                 Position = new Vector2(
                     Position.X,
@@ -82,7 +86,7 @@ public partial class SwipeableControl : Control
             }
             else
             {
-                GD.Print($"Cannot move: lowEnough = {lowEnough}. highEnough = {highEnough}. Position = {Position.Y} + {yChange} => {newYPos}. Snap State = {_snapState} _initialPos.Y = {_initialPos.Y}. MaxY = {MaxY}.");
+                GD.Print($"Cannot move: lowEnough = {lowEnough}. highEnough = {highEnough}. Position = {Position.Y} + {yChange} => {newYPos}. Snap State = {_snapState} _initialPos.Y = {_initialPos.Y}. MaxY = {_maxY}.");
             }
         }
     }
