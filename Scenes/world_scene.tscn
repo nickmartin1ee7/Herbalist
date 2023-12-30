@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://ci4b5mgekpaev"]
+[gd_scene load_steps=27 format=3 uid="uid://ci4b5mgekpaev"]
 
 [ext_resource type="Script" path="res://Scenes/WorldScene.cs" id="1_7ydjs"]
 [ext_resource type="Texture2D" uid="uid://dwjvfyf1rir43" path="res://Assets/world_scene_background_tall.jpg" id="2_0ubxp"]
@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://bqgcwklub4drv" path="res://Assets/Daffodil.png" id="21_wujq1"]
 [ext_resource type="Texture2D" uid="uid://c05dt413boxav" path="res://Assets/Snapdragon.png" id="22_j0spv"]
 [ext_resource type="Texture2D" uid="uid://cnqggtj8ppvmp" path="res://Assets/Zinnia.png" id="23_lgegr"]
+[ext_resource type="PackedScene" uid="uid://cwnc1tnq224r2" path="res://Controls/shop.tscn" id="25_p35m1"]
 [ext_resource type="Script" path="res://Controls/SwipeableControl.cs" id="25_vri5b"]
 
 [node name="WorldScene" type="Node2D"]
@@ -205,33 +206,34 @@ anchors_preset = 0
 offset_left = 16.0
 offset_top = 1928.0
 offset_right = 920.0
-offset_bottom = 2435.0
+offset_bottom = 3256.0
 mouse_filter = 1
 script = ExtResource("25_vri5b")
-metadata/_edit_lock_ = true
 
-[node name="Panel" type="Panel" parent="CentralControl/SwipeableControl"]
+[node name="BackgroundPanel" type="Panel" parent="CentralControl/SwipeableControl"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 32.0
-offset_right = -32.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 1
-metadata/_edit_lock_ = true
+mouse_filter = 2
 
-[node name="TopPanel" type="Panel" parent="CentralControl/SwipeableControl/Panel"]
+[node name="VSplitContainer" type="VSplitContainer" parent="CentralControl/SwipeableControl"]
 layout_mode = 1
-anchors_preset = 10
+anchors_preset = 15
 anchor_right = 1.0
-offset_bottom = 88.0
+anchor_bottom = 1.0
 grow_horizontal = 2
-mouse_filter = 1
-metadata/_edit_lock_ = true
+grow_vertical = 2
+split_offset = 85
+dragger_visibility = 1
 
-[node name="ShopLabel" type="Label" parent="CentralControl/SwipeableControl/Panel/TopPanel"]
+[node name="TopPanel" type="Panel" parent="CentralControl/SwipeableControl/VSplitContainer"]
+layout_mode = 2
+mouse_filter = 1
+
+[node name="Label" type="Label" parent="CentralControl/SwipeableControl/VSplitContainer/TopPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -243,32 +245,12 @@ text = "Shop"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BottonPanel" type="Panel" parent="CentralControl/SwipeableControl/Panel"]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -419.0
-grow_horizontal = 2
-grow_vertical = 0
+[node name="BottonPanel" type="Panel" parent="CentralControl/SwipeableControl/VSplitContainer"]
+layout_mode = 2
 mouse_filter = 1
-metadata/_edit_lock_ = true
 
-[node name="Label2" type="Label" parent="CentralControl/SwipeableControl/Panel/BottonPanel"]
+[node name="Shop" parent="CentralControl/SwipeableControl/VSplitContainer/BottonPanel" instance=ExtResource("25_p35m1")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -120.0
-offset_bottom = -120.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 74
-text = "🤩🤩🤩🤩🤩"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_lock_ = true
 
 [node name="FooterContainer" type="HBoxContainer" parent="."]
 offset_left = 88.0
