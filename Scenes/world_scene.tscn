@@ -199,16 +199,16 @@ texture = ExtResource("23_lgegr")
 metadata/_edit_lock_ = true
 
 [node name="SwipeableControl" type="Control" parent="CentralControl"]
-visible = false
 clip_contents = true
 layout_mode = 3
 anchors_preset = 0
 offset_left = 16.0
 offset_top = 1928.0
 offset_right = 920.0
-offset_bottom = 3256.0
+offset_bottom = 3536.0
 mouse_filter = 1
 script = ExtResource("25_vri5b")
+metadata/_edit_lock_ = true
 
 [node name="BackgroundPanel" type="Panel" parent="CentralControl/SwipeableControl"]
 layout_mode = 1
@@ -218,6 +218,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+metadata/_edit_lock_ = true
 
 [node name="VSplitContainer" type="VSplitContainer" parent="CentralControl/SwipeableControl"]
 layout_mode = 1
@@ -228,10 +229,12 @@ grow_horizontal = 2
 grow_vertical = 2
 split_offset = 85
 dragger_visibility = 1
+metadata/_edit_lock_ = true
 
 [node name="TopPanel" type="Panel" parent="CentralControl/SwipeableControl/VSplitContainer"]
 layout_mode = 2
 mouse_filter = 1
+metadata/_edit_lock_ = true
 
 [node name="Label" type="Label" parent="CentralControl/SwipeableControl/VSplitContainer/TopPanel"]
 layout_mode = 1
@@ -244,15 +247,19 @@ theme_override_font_sizes/font_size = 64
 text = "Shop"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_lock_ = true
 
 [node name="BottonPanel" type="Panel" parent="CentralControl/SwipeableControl/VSplitContainer"]
 layout_mode = 2
 mouse_filter = 1
+metadata/_edit_lock_ = true
 
 [node name="Shop" parent="CentralControl/SwipeableControl/VSplitContainer/BottonPanel" instance=ExtResource("25_p35m1")]
 layout_mode = 1
+metadata/_edit_lock_ = true
 
 [node name="FooterContainer" type="HBoxContainer" parent="."]
+visible = false
 offset_left = 88.0
 offset_top = 2216.0
 offset_right = 1008.0
