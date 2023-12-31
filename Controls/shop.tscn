@@ -1,5 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://cwnc1tnq224r2"]
+[gd_scene load_steps=3 format=3 uid="uid://cwnc1tnq224r2"]
 
+[ext_resource type="Script" path="res://Controls/Shop.cs" id="1_i3lyr"]
 [ext_resource type="PackedScene" uid="uid://cqajr84pbtm2d" path="res://Controls/shop_item.tscn" id="1_m8hdf"]
 
 [node name="Shop" type="Control"]
@@ -9,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_i3lyr")
 
 [node name="ShopItemsContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -27,4 +29,10 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="ShopItem3" parent="ShopItemsContainer" instance=ExtResource("1_m8hdf")]
+layout_mode = 2
+
+[node name="ShopItem4" parent="ShopItemsContainer" instance=ExtResource("1_m8hdf")]
+layout_mode = 2
+
+[node name="ShopItem5" parent="ShopItemsContainer" instance=ExtResource("1_m8hdf")]
 layout_mode = 2

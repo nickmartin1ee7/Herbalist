@@ -22,11 +22,10 @@ public partial class WorldScene : Node2D
 	private Dictionary<Seed, Sprite2D> _flowerSprites;
 	private VBoxContainer _upgradableSectionContainer;
 	private HBoxContainer _flowerGardenContainer;
+	private SwipeableControl _swipableControl;
 	private Label _pointsLabel;
 	private Label _playtimeAmountLabel;
 	private Button _forageButton;
-	private Button _mainMenuButton;
-	private Button _shopButton;
 	private int _lastSeedIndex;
 	private DateTime _startTime;
 
@@ -45,14 +44,12 @@ public partial class WorldScene : Node2D
 		LoadUiNodes();
 
 		_forageButton.Pressed += ForageSeed;
-		_mainMenuButton.Pressed += NavigateToMainMenu;
-		_shopButton.Pressed += NavigateToShop;
+
+		_swipableControl.TweenFactory = () => _swipableControl.CreateTween();
 
 		PopulateAndHideFlowersDictionary();
 
 		ReloadDataFromStorage();
-
-		UpdateBuyButton(PeekNextSeed(out _));
 
 		ResetCyclerToken();
 		_dataSaverCycler ??= Task.Run(() => DataSaverCyclerJob(_cyclerJobsCts.Token));
@@ -105,11 +102,7 @@ public partial class WorldScene : Node2D
 			GetNode<HBoxContainer>("FlowerGardenContainer")
 			;
 
-		// TODO: Remove below with the new SwipeableControl
-		var footerContainer = GetNode<HBoxContainer>("FooterContainer");
-
-		_mainMenuButton = footerContainer.GetNode<Button>("MainMenuButton");
-		_shopButton = footerContainer.GetNode<Button>("ShopButton");
+		_swipableControl = centralControl.GetNode<SwipeableControl>("SwipeableControl");
 	}
 
 	private void ResetCyclerToken()
@@ -164,15 +157,7 @@ public partial class WorldScene : Node2D
 	}
 
 
-	private void NavigateToShop()
-	{
-		// TODO: Implement shop
-		//GetTree().ChangeSceneToFile(Scenes.Shop);
-
-		// TODO: For now, just buy next flower
-		HandleNewUpgrade();
-	}
-
+	// TODO: Implement a caller, back button/esc?
 	private void NavigateToMainMenu()
 	{
 		ResetCyclerToken();
@@ -194,7 +179,7 @@ public partial class WorldScene : Node2D
 			foreach (var seed in seeds)
 			{
 				GD.Print($"Giving the user back previously purchased: {seed}");
-				BuyAndShowUpgrade(seed, isFree: true);
+				DeductSeedCostAndShowFlower(seed, isFree: true);
 
 				// TODO: Refactor duplication
 				// Load the Section scene and instance it
@@ -207,25 +192,12 @@ public partial class WorldScene : Node2D
 
 				section.Scale = new Vector2(2.5f, 2.5f);
 
-				var preparedSection = PrepareNextSection(section);
+				var preparedSection = PrepareNextSection(section, RequestNextSeed());
 
 				if (preparedSection is not null)
 				{
 					_upgradableSectionContainer.AddChild(preparedSection);
 					CallThreadSafe(nameof(AppendNewSectionHeightToFlowerVBox));
-
-					var nextUpgrade = PeekNextSeed(out _);
-					UpdateBuyButton(nextUpgrade);
-
-					GD.Print($"Next upgrade: {nextUpgrade}");
-
-					if (nextUpgrade is null)
-					{
-						// No more to buy!
-						GD.Print($"No more upgrades to buy!");
-
-						HidePurchasing();
-					}
 				}
 			}
 		}
@@ -258,17 +230,6 @@ public partial class WorldScene : Node2D
 		}
 
 		GD.Print("Data read!");
-	}
-
-	private void UpdateBuyButton(Seed? seed)
-	{
-		if (seed is null)
-		{
-			HidePurchasing();
-			return;
-		}
-
-		_shopButton.Text = $"Buy {seed} ({((long)seed).FormatLargeNumber()}/cycle){System.Environment.NewLine}Costs {((long)seed * SeedCosts.Multiplier).FormatLargeNumber()} seeds)";
 	}
 
 	private async Task DataSaverCyclerJob(CancellationToken token)
@@ -324,17 +285,15 @@ public partial class WorldScene : Node2D
 		_playtimeAmountLabel.Text = $"{DateTime.Now - _startTime:hh\\:mm\\:ss\\.fff}";
 	}
 
-	private void HandleNewUpgrade()
+	private void BuyNewSeed(Seed? nextSeed)
 	{
-		var nextSeed = PeekNextSeed(out _);
-
 		if (!CanPurchaseNextUpgrade(nextSeed))
 		{
 			GD.Print($"Cannot purchase: {nextSeed}");
 			return;
 		}
 
-		BuyAndShowUpgrade(nextSeed.Value);
+		DeductSeedCostAndShowFlower(nextSeed.Value);
 
 		// Load the Section scene and instance it
 		var upgradableSectionScene = GD.Load<PackedScene>(UpgradableSection.ResourcePath);
@@ -346,29 +305,14 @@ public partial class WorldScene : Node2D
 
 		section.Scale = new Vector2(2.5f, 2.5f);
 
-		var preparedSection = PrepareNextSection(section);
+		var preparedSection = PrepareNextSection(section, nextSeed);
 
 		if (preparedSection is not null)
 		{
 			GD.Print($"Bought {preparedSection.SeedType}!");
 
-			GD.Print($"DEBUG: UpgradableSection size = {preparedSection}");
-
 			_upgradableSectionContainer.AddChild(preparedSection);
 			CallThreadSafe(nameof(AppendNewSectionHeightToFlowerVBox));
-
-			var nextUpgrade = PeekNextSeed(out _);
-			UpdateBuyButton(nextUpgrade);
-
-			GD.Print($"Next upgrade: {nextUpgrade}");
-
-			if (nextUpgrade is null)
-			{
-				// No more to buy!
-				GD.Print($"No more upgrades to buy!");
-
-				HidePurchasing();
-			}
 		}
 	}
 
@@ -378,7 +322,7 @@ public partial class WorldScene : Node2D
 		_upgradableSectionContainer.CustomMinimumSize = new Vector2(_upgradableSectionContainer.Size.X, lastSectionY + SectionHeight);
 	}
 
-	private void BuyAndShowUpgrade(Seed nextUpgrade, bool isFree = false)
+	private void DeductSeedCostAndShowFlower(Seed nextUpgrade, bool isFree = false)
 	{
 		GD.Print($"Buying (Free = {isFree}: {nextUpgrade}");
 
@@ -403,15 +347,8 @@ public partial class WorldScene : Node2D
 	private bool CanPurchaseNextUpgrade(Seed? nextSeed) =>
 		nextSeed.HasValue && GetSeedCost(nextSeed.Value) <= Points;
 
-	private void HidePurchasing()
+	private UpgradableSection PrepareNextSection(UpgradableSection section, Seed? nextSeed)
 	{
-		_shopButton.Text = "Sold Out";
-	}
-
-	private UpgradableSection PrepareNextSection(UpgradableSection section, Seed? nextSeed = null)
-	{
-		nextSeed = nextSeed ?? RequestNextSeed();
-
 		if (!nextSeed.HasValue)
 		{
 			return null;

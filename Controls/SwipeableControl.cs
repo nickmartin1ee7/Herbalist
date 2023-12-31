@@ -1,3 +1,5 @@
+using System;
+
 using Godot;
 
 public partial class SwipeableControl : Control
@@ -9,12 +11,14 @@ public partial class SwipeableControl : Control
         SnappingToBottom,
     }
 
+    private const double TweenInterval = 0.3;
 
     private float _maxY;
     private bool _dragging;
     private SnapState _snapState;
     private Vector2 _initialPos;
 
+    public Func<Tween> TweenFactory { get; set; }
 
     public override void _Ready()
     {
@@ -37,17 +41,21 @@ public partial class SwipeableControl : Control
                 if (_snapState == SnapState.SnappingToTop)
                 {
                     GD.Print($"Snaping to top... Position: {Position.Y} -> {_maxY}");
-                    Position = new Vector2(
+
+                    TweenFactory().TweenProperty(this, "position", new Vector2(
                         Position.X,
-                        _maxY);
+                        _maxY),
+                        TweenInterval);
                 }
                 // Snap to bottom
                 else if (_snapState == SnapState.SnappingToBottom)
                 {
                     GD.Print($"Snaping to bottom... Position: {Position.Y} -> {_initialPos.Y}");
-                    Position = new Vector2(
+
+                    TweenFactory().TweenProperty(this, "position", new Vector2(
                         Position.X,
-                        _initialPos.Y);
+                        _initialPos.Y),
+                        TweenInterval);
                 }
 
                 _snapState = SnapState.None;
