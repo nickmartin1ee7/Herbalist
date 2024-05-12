@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -28,19 +29,22 @@ public partial class WorldScene : Node2D
 	private Button _mainMenuButton;
 	private Button _shopButton;
 	private int _lastSeedIndex;
-	private DateTime _startTime;
+	private TimeSpan _lastElapsedTime = TimeSpan.Zero;
 
 	private CancellationTokenSource _cyclerJobsCts;
 	private Task _dataSaverCycler;
+	private Stopwatch _gameSw = new Stopwatch();
 
 	private int GetSeedCost(Seed seed) => (int)seed * SeedCosts.Multiplier;
+
+	private TimeSpan TotalPlayTime => _lastElapsedTime + (_gameSw?.Elapsed ?? TimeSpan.Zero);
 
 	public long Points { get; set; } = StartingPoints;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		_startTime = DateTime.Now;
+		_gameSw.Start();
 
 		LoadUiNodes();
 
@@ -148,6 +152,7 @@ public partial class WorldScene : Node2D
 
 	private void NavigateToMainMenu()
 	{
+		_gameSw.Stop();
 		ResetCyclerToken();
 		GetTree().ChangeSceneToFile(Scenes.MainMenu);
 	}
@@ -218,16 +223,19 @@ public partial class WorldScene : Node2D
 		if (data.TryGetValue(nameof(_lastSeedIndex), out var lastSeedIndexStr))
 		{
 			_lastSeedIndex = JsonSerializer.Deserialize<int>(lastSeedIndexStr);
+			GD.Print($"Data read: {nameof(_lastSeedIndex)}={_lastSeedIndex}");
 		}
 
 		if (data.TryGetValue(nameof(Points), out var pointsStr))
 		{
 			Points = JsonSerializer.Deserialize<long>(pointsStr);
+			GD.Print($"Data read: {nameof(Points)}={Points}");
 		}
 
-		if (data.TryGetValue(nameof(_startTime), out var startTimeStr))
+		if (data.TryGetValue(nameof(_lastElapsedTime), out var lastElapsedTimeStr))
 		{
-			_startTime = JsonSerializer.Deserialize<DateTime>(startTimeStr);
+			_lastElapsedTime = JsonSerializer.Deserialize<TimeSpan>(lastElapsedTimeStr);
+			GD.Print($"Data read: {nameof(_lastElapsedTime)}={_lastElapsedTime}");
 		}
 
 		GD.Print("Data read!");
@@ -276,7 +284,7 @@ public partial class WorldScene : Node2D
 
 		var lastSeedIndexStr = JsonSerializer.Serialize(_lastSeedIndex);
 		var pointsStr = JsonSerializer.Serialize(Points);
-		var startTimeStr = JsonSerializer.Serialize(_startTime);
+		var lastElapsedTimeStr = JsonSerializer.Serialize(TotalPlayTime);
 
 		var data = new Dictionary<string, string>
 		{
@@ -284,7 +292,7 @@ public partial class WorldScene : Node2D
 			{ nameof(_lastSeedIndex), lastSeedIndexStr },
 			{ nameof(Points), pointsStr },
 			{ $"{nameof(_sections)}.{nameof(UpgradableSection.Multiplier)}", sectionsUpgrades},
-			{ nameof(_startTime), startTimeStr }
+			{ nameof(_lastElapsedTime), lastElapsedTimeStr }
 		};
 
 		DataStorage.Write(data);
@@ -294,7 +302,7 @@ public partial class WorldScene : Node2D
 	public override void _Process(double delta)
 	{
 		_pointsLabel.Text = $"{Points.FormatLargeNumber()} seeds";
-		_playtimeAmountLabel.Text = $"{DateTime.Now - _startTime:hh\\:mm\\:ss\\.fff}";
+		_playtimeAmountLabel.Text = $"{TotalPlayTime:hh\\:mm\\:ss\\.fff}";
 	}
 
 	private void HandleNewUpgrade()
